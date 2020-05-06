@@ -221,14 +221,20 @@ public class SQLConnector {
     public void changeUserInfo(User user) {
         connect();
         try {
+            
+            preparedStatement = connection.prepareStatement("UPDATE users SET firstname = ?, lastname = ?, address = ?, city = ?, zip = ?, state = ?, country = ? WHERE email = ?;");
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getAddress());
+            preparedStatement.setString(4, user.getCity());
+            preparedStatement.setString(5, user.getZip());
+            preparedStatement.setString(6, user.getState());
+            preparedStatement.setString(7, user.getCountry());
+            preparedStatement.setString(8, user.getEmail());
 
-            String sql = "UPDATE users SET firstname = '" + user.getFirstname() + "', lastname = ' " + user.getLastname() + "', address = ' + " + user.getAddress() + "', city = '" + user.getCity() + "', zip = '" + user.getZip() + "', state = '" + user.getState() + "', country = '" + user.getCountry() + "' WHERE email = '+" + user.getEmail() + "';";
+            int rowAffected = preparedStatement.executeUpdate();
 
-            statement = connection.createStatement();
-            statement.executeUpdate(sql);
-
-
-            System.out.println("Information successfully edited.");
+            System.out.println("Information successfully edited. Total of rows changed: " + rowAffected);
 
         } catch (SQLException e) {
             e.printStackTrace();
