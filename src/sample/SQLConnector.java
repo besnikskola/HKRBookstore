@@ -16,6 +16,7 @@ public class SQLConnector {
     Connection connection;
     Statement statement;
     ResultSet resultSet;
+    PreparedStatement preparedStatement;
 
     //use this to connect to the database
     public void connect() {
@@ -177,7 +178,6 @@ public class SQLConnector {
     }
 
 
-
     public void addBook(Book book) {
         connect();
 
@@ -216,6 +216,26 @@ public class SQLConnector {
             e.printStackTrace();
         }
         disconnect();
+    }
+
+    public void changeUserInfo(User user) {
+        connect();
+        try {
+
+            String sql = "UPDATE users SET firstname = '" + user.getFirstname() + "', lastname = ' " + user.getLastname() + "', address = ' + " + user.getAddress() + "', city = '" + user.getCity() + "', zip = '" + user.getZip() + "', state = '" + user.getState() + "', country = '" + user.getCountry() + "' WHERE email = '+" + user.getEmail() + "';";
+
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+
+            System.out.println("Information successfully edited.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        disconnect();
+
     }
 
 

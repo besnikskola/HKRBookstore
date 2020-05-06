@@ -144,7 +144,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="editInfoBtn" layoutX="738.0" layoutY="14.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="160.0" style="-fx-background-color: #F7CA85;" text="Edit information" visible="false">
+            <Button fx:id="editInfoBtn" layoutX="738.0" layoutY="14.0" mnemonicParsing="false" onAction="#seeEditInfo" prefHeight="41.0" prefWidth="160.0" style="-fx-background-color: #F7CA85;" text="Edit information" visible="false">
                <font>
                   <Font size="18.0" />
                </font>

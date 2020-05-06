@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -124,6 +125,18 @@ public class StoreController extends SQLConnector implements Initializable {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("changeOptionSample.fxml"));
+
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    }
+
+    @FXML
+    public void seeEditInfo(ActionEvent event) throws IOException {
+
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("UserEditInformation.fxml"));
 
         stage.setScene(new Scene(root));
         stage.show();

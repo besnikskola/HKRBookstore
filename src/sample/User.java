@@ -114,7 +114,7 @@ public class User {
         this.country = country;
     }
 
-    public boolean isEmployee() {
+    public boolean getIsEmployee() {
         return isEmployee;
     }
 
