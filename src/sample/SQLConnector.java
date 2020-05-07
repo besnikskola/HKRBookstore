@@ -144,10 +144,10 @@ public class SQLConnector {
                 double price = resultSet.getDouble("price");
                 Book book = new Book(null, title, author, genre, quantity, price);
                 bookHold.add(book);
-                System.out.print("BOOK ADDED: [ID " + id);
-                System.out.print(", TITLE " + title);
-                System.out.print(", AUTHOR " + author);
-                System.out.print(", GENRE " + genre);
+                System.out.print("BOOK ADDED: [ID: " + id);
+                System.out.print(", TITLE: " + title);
+                System.out.print(", AUTHOR: " + author);
+                System.out.print(", GENRE: " + genre);
                 System.out.print(", QUANTITY: " + quantity);
                 System.out.println(" PRICE: " + price + "]");
             }
@@ -234,7 +234,31 @@ public class SQLConnector {
 
             int rowAffected = preparedStatement.executeUpdate();
 
-            System.out.println("Information successfully edited. Total of rows changed: " + rowAffected);
+            System.out.println("Customer information successfully edited. Total of rows changed: " + rowAffected);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        disconnect();
+
+    }
+
+    public void editBookInfo(Book book) {
+        connect();
+        try {
+
+            preparedStatement = connection.prepareStatement("UPDATE books SET title = ?, author = ?, genre = ?, quantity = ?, price = ? WHERE bookid = ?;");
+            preparedStatement.setString(1, book.getTitle());
+            preparedStatement.setString(2, book.getAuthor());
+            preparedStatement.setString(3, book.getGenre());
+            preparedStatement.setInt(4, book.getQuantity());
+            preparedStatement.setDouble(5, book.getPrice());
+            preparedStatement.setInt(6, book.getId());
+
+            int rowAffected = preparedStatement.executeUpdate();
+
+            System.out.println("Book information successfully edited. Total of rows changed: " + rowAffected);
 
         } catch (SQLException e) {
             e.printStackTrace();

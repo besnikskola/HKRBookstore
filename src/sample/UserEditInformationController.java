@@ -89,12 +89,7 @@ public class UserEditInformationController implements Initializable {
             alert.setContentText("Your information has successfully been changed..");
             alert.show();
 
-            Node node = (Node) event.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
-
-            stage.setScene(new Scene(root));
-            stage.show();
+            seeStore(event);
 
         } else {
 
@@ -105,6 +100,16 @@ public class UserEditInformationController implements Initializable {
             alert.show();
 
         }
+    }
+
+    public void seeStore(ActionEvent event) throws IOException {
+
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
+
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 }

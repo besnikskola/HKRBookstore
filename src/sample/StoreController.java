@@ -34,6 +34,9 @@ public class StoreController extends SQLConnector implements Initializable {
     private Button editInfoBtn;
 
     @FXML
+    private Button editBooksBtn;
+
+    @FXML
     private TextField searchBookTextField;
 
     @FXML
@@ -44,7 +47,7 @@ public class StoreController extends SQLConnector implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        editBooksBtn.setVisible(true);
             connect();
             arrListBooks = loadBooks();
             searchBookTextField.setOnKeyReleased(keyEvent -> relevantSearchMethod());
@@ -54,6 +57,7 @@ public class StoreController extends SQLConnector implements Initializable {
                 logInBtn.setVisible(false);
                 signOutBtn.setVisible(true);
                 editInfoBtn.setVisible(true);
+                editBooksBtn.setVisible(true);
 
             } else {
                 System.out.println("Is not logged in.");
@@ -154,8 +158,15 @@ public class StoreController extends SQLConnector implements Initializable {
         stage.show();
     }
 
-    public static ArrayList<Book> getArrListBooks() {
-        return arrListBooks;
+    public void seeEditBookInfo(ActionEvent event) throws IOException {
+
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("BookEditInformation.fxml"));
+
+        stage.setScene(new Scene(root));
+        stage.show();
+
     }
 
 }

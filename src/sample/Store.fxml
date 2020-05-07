@@ -149,6 +149,11 @@
                   <Font size="18.0" />
                </font>
             </Button>
+            <Button fx:id="editBooksBtn" layoutX="128.0" layoutY="287.0" mnemonicParsing="false" onAction="#seeEditBookInfo" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #F7CA85;" text="Edit Books" visible="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>
