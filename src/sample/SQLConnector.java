@@ -30,22 +30,6 @@ public class SQLConnector {
         }
     }
 
-    public void sqlQuery() {
-        try {
-            statement = connection.createStatement();
-
-            resultSet = statement.executeQuery(""); // enter the SQL query here
-
-            while (resultSet.next()) {
-                System.out.println(resultSet.getInt(1)); //int is example, specify here what type to get
-            }
-
-
-        } catch (SQLException sq) {
-            sq.printStackTrace();
-            System.out.println(sq.getMessage());
-        }
-    }
 
     public void createUser(User user) {
 

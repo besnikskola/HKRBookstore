@@ -47,21 +47,21 @@ public class StoreController extends SQLConnector implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        editBooksBtn.setVisible(true);
-            connect();
-            arrListBooks = loadBooks();
-            searchBookTextField.setOnKeyReleased(keyEvent -> relevantSearchMethod());
-            if (LoginController.isLoggedIn) {
-                System.out.println("Is logged in as: " + LoginController.user.toString());
-                signUpBtn.setVisible(false);
-                logInBtn.setVisible(false);
-                signOutBtn.setVisible(true);
-                editInfoBtn.setVisible(true);
-                editBooksBtn.setVisible(true);
 
-            } else {
-                System.out.println("Is not logged in.");
-            }
+        connect();
+        arrListBooks = loadBooks();
+        searchBookTextField.setOnKeyReleased(keyEvent -> relevantSearchMethod());
+        if (LoginController.isLoggedIn) {
+            System.out.println("Is logged in as: " + LoginController.user.toString());
+            signUpBtn.setVisible(false);
+            logInBtn.setVisible(false);
+            signOutBtn.setVisible(true);
+            editInfoBtn.setVisible(true);
+            editBooksBtn.setVisible(true);
+
+        } else {
+            System.out.println("Is not logged in.");
+        }
 
     }
 
@@ -89,83 +89,47 @@ public class StoreController extends SQLConnector implements Initializable {
     }
 
     @FXML
-    public void signUp(ActionEvent event) throws IOException {
-        disconnect();
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
-
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-    @FXML
-    public void logIn(ActionEvent event) throws IOException {
-        disconnect();
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-
-
-        stage.setScene(new Scene(root));
-        stage.show();
-
-    }
-
-    @FXML
-    public void info(ActionEvent event) throws IOException {
-        disconnect();
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("info.fxml"));
-
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-    @FXML
-    public void options(ActionEvent event) throws IOException {
-        disconnect();
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("changeOptionSample.fxml"));
-
-        stage.setScene(new Scene(root));
-        stage.show();
-
-    }
-
-    @FXML
-    public void seeEditInfo(ActionEvent event) throws IOException {
+    public void changeScene(ActionEvent event) throws IOException {
 
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("UserEditInformation.fxml"));
 
-        stage.setScene(new Scene(root));
-        stage.show();
+        if (event.getSource().toString().contains("logInBtn")) {
+            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
 
-    }
+        } else if (event.getSource().toString().contains("signUpBtn")) {
+            Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
 
-    @FXML
-    public void seeList(ActionEvent event) throws IOException {
+        } else if (event.getSource().toString().contains("infoBtn")) {
+            Parent root = FXMLLoader.load(getClass().getResource("info.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("BooklistA-ZController.fxml"));
+        } else if (event.getSource().toString().contains("optionBtn") || event.getSource().toString().contains("optionBtn2") || event.getSource().toString().contains("optionBtn3")) {
+            Parent root = FXMLLoader.load(getClass().getResource("changeOptionSample.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
+        } else if (event.getSource().toString().contains("editInfoBtn")) {
+            Parent root = FXMLLoader.load(getClass().getResource("UserEditInformation.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
 
-    public void seeEditBookInfo(ActionEvent event) throws IOException {
+        } else if (event.getSource().toString().contains("editBooksBtn")) {
+            Parent root = FXMLLoader.load(getClass().getResource("BookEditInformation.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("BookEditInformation.fxml"));
+        } else if (event.getSource().toString().contains("viewBookListBtn")) {
+            Parent root = FXMLLoader.load(getClass().getResource("BooklistA-ZController.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        stage.setScene(new Scene(root));
-        stage.show();
+        }
 
     }
 
