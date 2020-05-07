@@ -38,13 +38,7 @@
          </font>
       </Button>
       <TextField fx:id="BookId" layoutX="652.0" layoutY="250.0" prefHeight="40.0" prefWidth="140.0" />
-      <TextField fx:id="QuantityOfBook" layoutX="926.0" layoutY="250.0" prefHeight="40.0" prefWidth="65.0" />
       <Label layoutX="555.0" layoutY="254.0" text="Book-ID">
-         <font>
-            <Font name="Calibri Bold" size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="818.0" layoutY="254.0" text="Quantity">
          <font>
             <Font name="Calibri Bold" size="26.0" />
          </font>

@@ -28,29 +28,7 @@ public class ViewCartController implements Initializable {
 
     SQLConnector sql = new SQLConnector();
 
-    @FXML
-    public void RemoveFromCart() {
-        Alert alert = new Alert(null);
 
-
-        if (!BookId2.getText().isEmpty()) {
-            int bookId = Integer.parseInt(BookId2.getText());
-            sql.RemoveBookFromCart(bookId);
-            alert.setAlertType(Alert.AlertType.INFORMATION);
-            alert.setTitle("Removed from Cart");
-            alert.setContentText("Book: " + BookId2.getText() + " has removed from the cart ");
-            alert.show();
-            BookId2.clear();
-
-
-        } else {
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Please make sure all of the text fields have text in them.");
-            alert.show();
-
-        }
-    }
 
     @FXML
     public void CheckOutAgain(ActionEvent event) throws IOException {

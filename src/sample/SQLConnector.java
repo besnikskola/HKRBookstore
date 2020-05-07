@@ -191,17 +191,7 @@ public class SQLConnector {
         disconnect();
     }
 
-    public void RemoveBookFromCart(int bookId) {
-        connect();
-        try {
-            String sql = "INSERT INTO `books` (`bookid`, `title`, `author`, `genre`, `quantity`, `price`) VALUES (NULL, '" + bookId + "');";
-            statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        disconnect();
-    }
+
 
 
     public void removeBook(Book book) {
@@ -287,5 +277,29 @@ public class SQLConnector {
             System.out.println(ex.getMessage());
         }
     }
+    public boolean BookAvailability (String bookid) {
+        boolean Available = false;
+        try {
+            connect();
+            String sql = "SELECT bookid FROM books WHERE bookid = '" + bookid +  "';";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+
+            while (resultSet.next()) {
+                if (resultSet.getString("bookid").equals(bookid)) {
+                    System.out.println(resultSet.getString("bookid") + " is bookid");
+                    Available = true;
+                }
+            }
+            disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Available;
+    }
 
 }
+
+

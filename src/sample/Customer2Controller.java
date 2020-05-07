@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Customer2Controller extends SQLConnector implements Initializable {
+    private CartArrayList shoppingList = new CartArrayList();
 
     @FXML
     private TextField searchBookTextField;
@@ -96,27 +97,31 @@ public class Customer2Controller extends SQLConnector implements Initializable {
 
     @FXML
     public void AddToCart() {
-        Alert alert = new Alert(null);
+        String bookid = BookId.getText();
 
 
-        if (!BookId.getText().isEmpty()) {
-                int bookId = Integer.parseInt(BookId.getText());
-                int quantityOfBook=Integer.parseInt(QuantityOfBook.getText());
-                //sql.removeBook(bookId*quantityOfBook);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Added to cart");
-                alert.setContentText("Book: " + BookId.getText() + " has been added to the cart ");
-                alert.show();
-                BookId.clear();
+        boolean validated = sql.BookAvailability(bookid);
+        if (validated) {
+            //create new user object  based on the column
+            BookId.clear();
+            System.out.println("Id valid.");
+
+            System.out.println(bookid);
+            shoppingList.add(bookid);
+
+            System.out.println(shoppingList.toString());
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Id not valid.");
+            alert.setTitle("Error");
+            alert.setContentText("Invalid credentials. Please try again.");
+            alert.show();
+            BookId.clear();
+
+        }
 
 
-            } else {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Please make sure all of the text fields have text in them.");
-                alert.show();
-
-            }
     }
     @FXML
     public void ViewCart(ActionEvent event) throws IOException {
