@@ -14,11 +14,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Array;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Customer2Controller extends SQLConnector implements Initializable {
-    private CartArrayList shoppingList = new CartArrayList();
+   // private CartArrayList shoppingList = new CartArrayList();
+
+    ArrayList<String> cart = new ArrayList<>();
 
     @FXML
     private TextField searchBookTextField;
@@ -26,8 +30,7 @@ public class Customer2Controller extends SQLConnector implements Initializable {
     private TextArea searchResultArea;
     @FXML
     private TextField BookId;
-    @FXML
-    private TextField QuantityOfBook;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -96,33 +99,44 @@ public class Customer2Controller extends SQLConnector implements Initializable {
     }
 
     @FXML
-    public void AddToCart() {
-        String bookid = BookId.getText();
 
+    public void AddToCart() {
+
+
+
+        //ArrayList<String> cart = new ArrayList<String>();
+
+        String bookid = BookId.getText();
 
         boolean validated = sql.BookAvailability(bookid);
         if (validated) {
-            //create new user object  based on the column
+
             BookId.clear();
             System.out.println("Id valid.");
 
             System.out.println(bookid);
-            shoppingList.add(bookid);
+            cart.add(bookid);
+            System.out.println("new size: " + cart.size() );
 
-            System.out.println(shoppingList.toString());
+            for ( int j=0; j<cart.size(); j++ )
+                System.out.println("element " + j + ": " + cart.get(j) );
 
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            System.out.println("Id not valid.");
-            alert.setTitle("Error");
-            alert.setContentText("Invalid credentials. Please try again.");
-            alert.show();
-            BookId.clear();
+
+            } else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                System.out.println("Id not valid.");
+                alert.setTitle("Error");
+                alert.setContentText("Book not found. Please try again.");
+                alert.show();
+                BookId.clear();
+
+
+            }
+
 
         }
 
 
-    }
     @FXML
     public void ViewCart(ActionEvent event) throws IOException {
 
