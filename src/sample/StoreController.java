@@ -37,6 +37,9 @@ public class StoreController extends SQLConnector implements Initializable {
     private Button editBooksBtn;
 
     @FXML
+    private Button addBookBtn;
+
+    @FXML
     private TextField searchBookTextField;
 
     @FXML
@@ -57,8 +60,10 @@ public class StoreController extends SQLConnector implements Initializable {
             logInBtn.setVisible(false);
             signOutBtn.setVisible(true);
             editInfoBtn.setVisible(true);
-            editBooksBtn.setVisible(true);
-
+            if (LoginController.user.getIsEmployee()) {
+                editBooksBtn.setVisible(true);
+                addBookBtn.setVisible(true);
+            }
         } else {
             System.out.println("Is not logged in.");
         }
@@ -126,6 +131,11 @@ public class StoreController extends SQLConnector implements Initializable {
 
         } else if (event.getSource().toString().contains("viewBookListBtn")) {
             Parent root = FXMLLoader.load(getClass().getResource("BooklistA-ZController.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } else if (event.getSource().toString().contains("addBookBtn")) {
+            Parent root = FXMLLoader.load(getClass().getResource("EmployerMenu.fxml"));
             stage.setScene(new Scene(root));
             stage.show();
 

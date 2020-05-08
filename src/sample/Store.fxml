@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" prefHeight="607.0" prefWidth="1058.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StoreController">
+<GridPane alignment="center" hgap="10" prefHeight="607.0" prefWidth="1058.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StoreController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="612.0" prefWidth="1058.0" style="-fx-background-color: #FFFFFF;" GridPane.rowIndex="1">
          <children>
@@ -142,7 +149,12 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="editBooksBtn" layoutX="128.0" layoutY="287.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #F7CA85;" text="Edit Books" visible="false">
+            <Button fx:id="editBooksBtn" layoutX="138.0" layoutY="287.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #F7CA85;" text="Edit Books" visible="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="addBookBtn" layoutX="10.0" layoutY="287.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #F7CA85;" text="Add Book" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
