@@ -46,7 +46,7 @@ public class LoginController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("Customer1.fxml"));
     }
 
-    public void logIn(ActionEvent event) {
+    public void logIn(ActionEvent event) throws IOException {
 
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
@@ -64,17 +64,7 @@ public class LoginController implements Initializable {
             emailTextField.clear();
             passwordTextField.clear();
 
-            try {
-                Node node = (Node) event.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("Store.fxml"));
-                stage.setScene(new Scene(root));
-                stage.show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            changeScene(event);
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -90,24 +80,16 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public void ToEmployerSite(ActionEvent event) throws IOException {
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-
-        Parent root = FXMLLoader.load(getClass().getResource("Employer1.fxml"));
-
-
-        stage.setScene(new Scene(root));
-        stage.show();
-
+    public void changeScene(ActionEvent event) throws IOException {
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
     }
 
     public User getUser() {
         return user;
-    }
-
-    public boolean isLoggedIn() {
-        return isLoggedIn;
     }
 
 }

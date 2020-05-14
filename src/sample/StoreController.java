@@ -94,6 +94,14 @@ public class StoreController extends SQLConnector implements Initializable {
     }
 
     @FXML
+    public void signOut(ActionEvent event) throws IOException {
+        LoginController.isLoggedIn = false;
+        LoginController.user = null;
+        System.out.println("You have successfully signed out.");
+        changeScene(event);
+    }
+
+    @FXML
     public void changeScene(ActionEvent event) throws IOException {
 
         Node node = (Node) event.getSource();
@@ -139,6 +147,10 @@ public class StoreController extends SQLConnector implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
 
+        } else if (event.getSource().toString().contains("signOutBtn")) {
+            Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
         }
 
     }
