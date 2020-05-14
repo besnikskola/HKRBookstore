@@ -74,12 +74,12 @@ public class StoreController extends SQLConnector implements Initializable {
     private void relevantSearchMethod() {
         try {
 
-            if (searchBookTextField.getText().length() >= 2) {
+            if (searchBookTextField.getText().length() >= 1) {
                 searchResultArea.clear();
 
                 statement = connection.createStatement();
                 resultSet = statement.executeQuery("SELECT title FROM books " +
-                        "WHERE title LIKE '%" + searchBookTextField.getText() + "%';");
+                        "WHERE title LIKE '" + searchBookTextField.getText() + "%' ORDER BY title DESC;");
 
                 while (resultSet.next()) {
                     searchResultArea.appendText(resultSet.getString(1) + "\n");
