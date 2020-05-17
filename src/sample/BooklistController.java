@@ -32,7 +32,7 @@ public class BooklistController extends StoreController implements Initializable
     private ArrayList<Book> abcBookList = new ArrayList<>(arrListBooks);
 
     private void filter(){
-        abcBookList.sort(Comparator.comparing(Book::getAuthor));
+        abcBookList.sort(Comparator.comparing(Book::getTitle));
     }
 
     private ObservableList<Book> obsBooks(){

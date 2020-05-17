@@ -3,7 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -49,6 +50,14 @@
          </image>
       </ImageView>
       <ListView fx:id="genreView" layoutX="118.0" layoutY="161.0" prefHeight="259.0" prefWidth="153.0" />
-      <TextArea fx:id="textAreaGenre" layoutX="278.0" layoutY="161.0" prefHeight="259.0" prefWidth="659.0" />
+      <TableView fx:id="genreBookTable" layoutX="278.0" layoutY="161.0" prefHeight="259.0" prefWidth="660.0">
+        <columns>
+          <TableColumn fx:id="genreTitleCol" prefWidth="219.0" text="Title" />
+          <TableColumn fx:id="genreAuthorCol" prefWidth="212.0" text="Author" />
+            <TableColumn fx:id="genrePriceCol" prefWidth="102.0" text="Price" />
+            <TableColumn fx:id="genreQuantityCol" prefWidth="73.0" text="Quantity" />
+            <TableColumn fx:id="genreIdCol" prefWidth="53.0" text="ID" />
+        </columns>
+      </TableView>
    </children>
 </Pane>
