@@ -3,6 +3,7 @@ package sample;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class SQLConnector {
@@ -12,6 +13,12 @@ public class SQLConnector {
       TODO********************************************************************************************
      */
     private String url = "jdbc:mysql://den1.mysql6.gear.host:3306/hkrbookstore?user=hkrbookstore&password=Ed5!_3nNLzwI&serverTimezone=UTC";
+    static ArrayList<String> cart = new ArrayList<>();
+    static ArrayList<String> bookID = new ArrayList<>();
+    static ArrayList<Integer> Quantity = new ArrayList<>();
+
+    int NewQuantity;
+
 
     Connection connection;
     Statement statement;
@@ -176,8 +183,6 @@ public class SQLConnector {
     }
 
 
-
-
     public void removeBook(Book book) {
         connect();
 
@@ -195,7 +200,7 @@ public class SQLConnector {
     public void changeUserInfo(User user) {
         connect();
         try {
-            
+
             preparedStatement = connection.prepareStatement("UPDATE users SET firstname = ?, lastname = ?, address = ?, city = ?, zip = ?, state = ?, country = ? WHERE email = ?;");
             preparedStatement.setString(1, user.getFirstname());
             preparedStatement.setString(2, user.getLastname());
@@ -261,19 +266,45 @@ public class SQLConnector {
             System.out.println(ex.getMessage());
         }
     }
-    public boolean BookAvailability (String bookid) {
+
+    public boolean BookAvailability(String bookid) {
         boolean Available = false;
         try {
             connect();
-            String sql = "SELECT bookid FROM books WHERE bookid = '" + bookid +  "';";
+            String sql = "SELECT bookid, quantity, title, price, author FROM books WHERE bookid = '" + bookid + "';";
+
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
-
             while (resultSet.next()) {
                 if (resultSet.getString("bookid").equals(bookid)) {
-                    System.out.println(resultSet.getString("bookid") + " is bookid");
+                    resultSet.getString("bookid");
+                    resultSet.getString("title");
+                    resultSet.getString("author");
+                    resultSet.getDouble("price");
+
+                    bookID.add(bookid);
+                    cart.add(resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek");
+                    System.out.println(cart.contains(resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek"));
+
+                    for (int j = 0; j < cart.size(); j++)
+                        System.out.println("Item " + j + ": " + cart.get(j));
+
+
+                    Integer countA = Collections.frequency(cart, resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek");
+                    System.out.println(countA);
+
+                    System.out.println(resultSet.getInt("quantity"));
+                    NewQuantity = resultSet.getInt("quantity") - countA;
+                    System.out.println(NewQuantity);
+                    System.out.println(bookID);
+                    Quantity.add(NewQuantity);
+
+
                     Available = true;
+
+
+
                 }
             }
             disconnect();
@@ -284,6 +315,74 @@ public class SQLConnector {
         return Available;
     }
 
+    public boolean RemoveFromCart(String bookid) {
+
+        boolean InCart = false;
+        try {
+            connect();
+            String sql = "SELECT bookid, title, quantity, price, author FROM books WHERE bookid = '" + bookid + "';";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+
+            while (resultSet.next()) {
+                if (cart.contains(resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek")) {
+                    resultSet.getString("bookid");
+                    resultSet.getString("title");
+                    resultSet.getString("author");
+                    resultSet.getDouble("price");
+
+
+                    System.out.println("yes");
+                    InCart = true;
+                    bookID.add(bookid);
+                    cart.remove(resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek");
+                    System.out.println("new size: " + cart.size());
+                    for (int j = 0; j < cart.size(); j++)
+                        System.out.println("element " + j + ": " + cart.get(j));
+
+                    NewQuantity = NewQuantity + 1;
+                    System.out.println(NewQuantity);
+                    Quantity.add(NewQuantity);
+
+
+                }
+            }
+            disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return InCart;
+    }
+
+
+    public void CheckOut() {
+
+        String BookId = bookID.get(0);
+        int quantity = Quantity.get(0);
+        String ConvertQuantity = Integer.toString(quantity);
+
+        try {
+            connect();
+            String sql = "UPDATE books SET quantity='" + ConvertQuantity + "' WHERE bookid='" + BookId + "';";
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+
+            bookID.remove(0);
+            Quantity.remove(0);
+
+
+            System.out.println(bookID);
+
+            disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
+
 
 

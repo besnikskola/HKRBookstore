@@ -30,6 +30,8 @@ public class Customer2Controller extends SQLConnector implements Initializable {
     private TextArea searchResultArea;
     @FXML
     private TextField BookId;
+    @FXML
+    private TextField Remove;
 
 
     @Override
@@ -102,39 +104,61 @@ public class Customer2Controller extends SQLConnector implements Initializable {
 
     public void AddToCart() {
 
-
-
-        //ArrayList<String> cart = new ArrayList<String>();
-
         String bookid = BookId.getText();
-
         boolean validated = sql.BookAvailability(bookid);
+
         if (validated) {
-
             BookId.clear();
-            System.out.println("Id valid.");
+            //System.out.println("Id valid.");
+            //  System.out.println(bookid);
 
-            System.out.println(bookid);
-            cart.add(bookid);
-            System.out.println("new size: " + cart.size() );
-
-            for ( int j=0; j<cart.size(); j++ )
-                System.out.println("element " + j + ": " + cart.get(j) );
-
-
-            } else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                System.out.println("Id not valid.");
-                alert.setTitle("Error");
-                alert.setContentText("Book not found. Please try again.");
-                alert.show();
-                BookId.clear();
-
-
-            }
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Id not valid.");
+            alert.setTitle("Error");
+            alert.setContentText("Book not found. Please try again.");
+            alert.show();
+            BookId.clear();
 
 
         }
+
+
+    }
+
+    @FXML
+    public void RemoveBooksFromCart() {
+
+
+        String id = Remove.getText();
+
+        boolean validated = sql.RemoveFromCart(id);
+
+        if (validated) {
+            BookId.clear();
+            System.out.println("Book is in cart.");
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Id not valid.");
+            alert.setTitle("Error");
+            alert.setContentText("Book could not be removed. Please try again.");
+            alert.show();
+            BookId.clear();
+
+
+        }
+    }
+    @FXML
+    public void Check(){
+
+        for (int j = 0; j < bookID.size(); j++)
+            for (int i = 0; i < bookID.size(); i++)
+
+                CheckOut();
+
+    }
+
 
 
     @FXML
