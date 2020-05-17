@@ -133,7 +133,7 @@ public class SQLConnector {
                 String genre = resultSet.getString("genre");
                 int quantity = resultSet.getInt("quantity");
                 double price = resultSet.getDouble("price");
-                Book book = new Book(null, title, author, genre, quantity, price);
+                Book book = new Book(id, title, author, genre, quantity, price);
                 bookHold.add(book);
                 System.out.print("BOOK ADDED: [ID: " + id);
                 System.out.print(", TITLE: " + title);
