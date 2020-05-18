@@ -150,5 +150,8 @@
             <Font name="Calibri Bold Italic" size="26.0" />
          </font>
       </Button>
+      <TextField fx:id="Remove" layoutX="339.0" layoutY="353.0" />
+      <Button layoutX="364.0" layoutY="412.0" mnemonicParsing="false" onAction="#RemoveBooksFromCart" text="remove" />
+      <Button layoutX="165.0" layoutY="178.0" mnemonicParsing="false" onAction="#Check" text="Checkout" />
    </children>
 </Pane>
