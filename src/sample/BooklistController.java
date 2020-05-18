@@ -28,6 +28,7 @@ public class BooklistController extends StoreController implements Initializable
     @FXML private TableColumn<Book, String> genreCol = new TableColumn<>();
     @FXML private TableColumn<Book, Integer> quantityCol = new TableColumn<>();
     @FXML private TableColumn<Book, Double> priceCol = new TableColumn<>();
+    @FXML private TableColumn<Book, Integer> idCol = new TableColumn<>();
 
     private ArrayList<Book> abcBookList = new ArrayList<>(arrListBooks);
 
@@ -39,7 +40,7 @@ public class BooklistController extends StoreController implements Initializable
 
         ObservableList<Book> books = FXCollections.observableArrayList();
         for (Book b: abcBookList) {
-            books.add(new Book(null ,b.getTitle(), b.getAuthor(),b.getGenre(), b.getQuantity(), b.getPrice()));
+            books.add(new Book(b.getId() ,b.getTitle(), b.getAuthor(),b.getGenre(), b.getQuantity(), b.getPrice()));
         }
         return books;
     }
@@ -55,6 +56,7 @@ public class BooklistController extends StoreController implements Initializable
         genreCol.setCellValueFactory(new PropertyValueFactory<>("genre"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        idCol.setCellValueFactory(new  PropertyValueFactory<>("id"));
 
         bookTable.setItems(obsBooks());
 
