@@ -16,6 +16,11 @@ public class SQLConnector {
     static ArrayList<String> cart = new ArrayList<>();
     static ArrayList<String> bookID = new ArrayList<>();
     static ArrayList<Integer> Quantity = new ArrayList<>();
+    static ArrayList<String> Email = new ArrayList<>();
+    static ArrayList<String> IdBook = new ArrayList<>();
+    static ArrayList<String> OrderId = new ArrayList<>();
+    static ArrayList<String> FamousBooks = new ArrayList<>();
+    static ArrayList<String> PrintTop5 = new ArrayList<>();
 
     int NewQuantity;
 
@@ -69,6 +74,7 @@ public class SQLConnector {
                     System.out.println(resultSet.getString("email") + " is email");
                     System.out.println(resultSet.getString("password") + " is password");
                     isVerified = true;
+                    Email.add(resultSet.getString("email"));
                 }
             }
             disconnect();
@@ -283,27 +289,26 @@ public class SQLConnector {
                     resultSet.getString("author");
                     resultSet.getDouble("price");
 
+
+                    IdBook.add(bookid);
                     bookID.add(bookid);
-                    cart.add(resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek");
-                    System.out.println(cart.contains(resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek"));
+                    cart.add("Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n");
+                    System.out.println(cart.contains("Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n"));
 
                     for (int j = 0; j < cart.size(); j++)
                         System.out.println("Item " + j + ": " + cart.get(j));
 
 
-                    Integer countA = Collections.frequency(cart, resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek");
+                    Integer countA = Collections.frequency(cart, "Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n");
                     System.out.println(countA);
 
-                    System.out.println(resultSet.getInt("quantity"));
+                    System.out.println("Quantity: " + resultSet.getInt("quantity"));
                     NewQuantity = resultSet.getInt("quantity") - countA;
-                    System.out.println(NewQuantity);
-                    System.out.println(bookID);
+                    System.out.println("New quantity: " + NewQuantity);
                     Quantity.add(NewQuantity);
 
 
                     Available = true;
-
-
 
                 }
             }
@@ -314,6 +319,7 @@ public class SQLConnector {
 
         return Available;
     }
+
 
     public boolean RemoveFromCart(String bookid) {
 
@@ -326,7 +332,7 @@ public class SQLConnector {
 
 
             while (resultSet.next()) {
-                if (cart.contains(resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek")) {
+                if (cart.contains("Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n")) {
                     resultSet.getString("bookid");
                     resultSet.getString("title");
                     resultSet.getString("author");
@@ -336,13 +342,14 @@ public class SQLConnector {
                     System.out.println("yes");
                     InCart = true;
                     bookID.add(bookid);
-                    cart.remove(resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek");
+                    IdBook.remove(bookid);
+                    cart.remove("Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n");
                     System.out.println("new size: " + cart.size());
                     for (int j = 0; j < cart.size(); j++)
                         System.out.println("element " + j + ": " + cart.get(j));
 
                     NewQuantity = NewQuantity + 1;
-                    System.out.println(NewQuantity);
+                    System.out.println("New quantity: " + NewQuantity);
                     Quantity.add(NewQuantity);
 
 
@@ -357,7 +364,7 @@ public class SQLConnector {
     }
 
 
-    public void CheckOut() {
+    public void ReduceQuantity() {
 
         String BookId = bookID.get(0);
         int quantity = Quantity.get(0);
@@ -381,6 +388,109 @@ public class SQLConnector {
             e.printStackTrace();
         }
 
+    }
+
+    public void OrderOnEmail() {
+        String email = Email.get(0);
+
+        try {
+            connect();
+            String sql = "INSERT INTO `orders` (`email`) VALUES ('" + email + "');";
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            System.out.println("Order books on " + email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        disconnect();
+    }
+
+
+    public void GetOrderId() {
+        String email = Email.get(0);
+
+        try {
+            connect();
+            String sql = "SELECT * FROM orders WHERE orderid=(SELECT MAX(orderid) FROM orders WHERE email ='" + email + "');";
+
+            // String sql = "SELECT orderid FROM orders WHERE email='" + email + "';";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                resultSet.getString("orderid");
+                OrderId.add(resultSet.getString("orderid"));
+                System.out.println(resultSet.getString("orderid"));
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        disconnect();
+    }
+
+
+    public void checkOut() {
+        String oderId = OrderId.get(0);
+        String bookId = IdBook.get(0);
+
+        try {
+            connect();
+            String sql = "INSERT INTO `orders_has_books` (`orderid`,`bookid`) VALUES ('" + oderId + "','" + bookId + "');";
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+            IdBook.remove(0);
+            System.out.println(IdBook);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        disconnect();
+    }
+
+
+    public void FamousBooks() {
+
+        try {
+            connect();
+            String sql = "SELECT bookid, count(*) antal FROM orders_has_books group by bookid order by antal desc, bookid asc limit 5;";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                resultSet.getString("bookid");
+                System.out.println(resultSet.getString("bookid"));
+                FamousBooks.add(resultSet.getString("bookid"));
+            }
+            System.out.println(FamousBooks);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void PrintFamousBooks() {
+        String Top5=FamousBooks.get(0);
+        try {
+            connect();
+            String sql = "SELECT titel FROM books WHERE bookid='"+Top5+"';";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()){
+                resultSet.getString("titel");
+                PrintTop5.add(resultSet.getString("titel"+"\n"));
+                FamousBooks.remove(0);
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 

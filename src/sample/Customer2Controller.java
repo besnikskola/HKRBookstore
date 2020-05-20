@@ -101,8 +101,9 @@ public class Customer2Controller extends SQLConnector implements Initializable {
     }
 
     @FXML
+    public void AddToCart() throws SQLException {
 
-    public void AddToCart() {
+
 
         String bookid = BookId.getText();
         boolean validated = sql.BookAvailability(bookid);
@@ -111,6 +112,15 @@ public class Customer2Controller extends SQLConnector implements Initializable {
             BookId.clear();
             //System.out.println("Id valid.");
             //  System.out.println(bookid);
+
+            area.clear();
+
+
+            area.appendText(String.valueOf(cart));
+
+
+
+            // area.appendText("hej");
 
         } else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -135,8 +145,11 @@ public class Customer2Controller extends SQLConnector implements Initializable {
         boolean validated = sql.RemoveFromCart(id);
 
         if (validated) {
-            BookId.clear();
             System.out.println("Book is in cart.");
+            area.clear();
+            area.appendText(String.valueOf(cart));
+            Remove.clear();
+
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -144,20 +157,45 @@ public class Customer2Controller extends SQLConnector implements Initializable {
             alert.setTitle("Error");
             alert.setContentText("Book could not be removed. Please try again.");
             alert.show();
-            BookId.clear();
+            Remove.clear();
 
 
         }
     }
     @FXML
-    public void Check(){
+    public void Check() {
+        //om det inns böcker i
 
-        for (int j = 0; j < bookID.size(); j++)
-            for (int i = 0; i < bookID.size(); i++)
+        if (cart.size() > 0) {
 
-                CheckOut();
+            do {
+                ReduceQuantity();
+            }
+            while (bookID.size() > 0);
 
+            OrderOnEmail();
+            GetOrderId();
+
+            do {
+                checkOut();
+            }
+            while (IdBook.size() > 0);
+
+
+
+
+
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Nothing in cart");
+            alert.setTitle("Cart empty");
+            alert.setContentText("No book in cart");
+            alert.show();
+        }
     }
+
+
 
 
 
