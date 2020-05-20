@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" prefHeight="607.0" prefWidth="1058.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StoreController">
+<GridPane alignment="center" hgap="10" prefHeight="607.0" prefWidth="1058.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StoreController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="612.0" prefWidth="1058.0" style="-fx-background-color: #FFFFFF;" GridPane.rowIndex="1">
          <children>
@@ -114,12 +114,12 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="editBooksBtn" layoutX="138.0" layoutY="287.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #F7CA85;" text="Edit Books" visible="false">
+            <Button fx:id="editBooksBtn" layoutX="348.0" layoutY="334.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #F7CA85;" text="Edit Books" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="addBookBtn" layoutX="10.0" layoutY="287.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #F7CA85;" text="Add Book" visible="false">
+            <Button fx:id="addBookBtn" layoutX="140.0" layoutY="334.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="201.0" style="-fx-background-color: #F7CA85;" text="Add or Remove Books" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
