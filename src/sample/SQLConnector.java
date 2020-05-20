@@ -477,14 +477,15 @@ public class SQLConnector {
         String Top5=FamousBooks.get(0);
         try {
             connect();
-            String sql = "SELECT titel FROM books WHERE bookid='"+Top5+"';";
+            String sql = "SELECT title FROM books WHERE bookid='" + Top5 + "';";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()){
-                resultSet.getString("titel");
-                PrintTop5.add(resultSet.getString("titel"+"\n"));
+                resultSet.getString("title");
+                PrintTop5.add(resultSet.getString("title")+"\n");
                 FamousBooks.remove(0);
+
 
             }
 
