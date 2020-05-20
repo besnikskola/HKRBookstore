@@ -46,15 +46,16 @@ public class Customer2Controller extends SQLConnector implements Initializable {
     private void relevantSearchMethod() {
         try {
 
-            if (searchBookTextField.getText().length() >= 2) {
+            if (searchBookTextField.getText().length() >= 1) {
                 searchResultArea.clear();
 
                 statement = connection.createStatement();
-                resultSet = statement.executeQuery("SELECT title, bookid FROM books " +
+                resultSet = statement.executeQuery("SELECT title, price, bookid FROM books " +
                         "WHERE title LIKE '%" + searchBookTextField.getText() + "%';");
 
                 while (resultSet.next()) {
-                    searchResultArea.appendText(resultSet.getString(1) + "         ID: " + resultSet.getInt(2) + "\n");
+                    searchResultArea.appendText(resultSet.getString(1) + "    Price: " + resultSet.getDouble(2) +
+                            "   ID: " + resultSet.getInt(3) + "\n");
                 }
             } else
                 searchResultArea.clear();
@@ -99,6 +100,7 @@ public class Customer2Controller extends SQLConnector implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
 
     @FXML
     public void AddToCart() throws SQLException {
@@ -146,8 +148,8 @@ public class Customer2Controller extends SQLConnector implements Initializable {
 
         if (validated) {
             System.out.println("Book is in cart.");
-            area.clear();
-            area.appendText(String.valueOf(cart));
+            //area.clear();
+            //area.appendText(String.valueOf(cart));
             Remove.clear();
 
 

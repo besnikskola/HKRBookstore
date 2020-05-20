@@ -78,11 +78,12 @@ public class StoreController extends SQLConnector implements Initializable {
                 searchResultArea.clear();
 
                 statement = connection.createStatement();
-                resultSet = statement.executeQuery("SELECT title FROM books " +
+                resultSet = statement.executeQuery("SELECT title, price ,bookid  FROM books " +
                         "WHERE title LIKE '" + searchBookTextField.getText() + "%' ORDER BY title DESC;");
 
                 while (resultSet.next()) {
-                    searchResultArea.appendText(resultSet.getString(1) + "\n");
+                    searchResultArea.appendText(resultSet.getString(1) + "    Price: " + resultSet.getDouble(2) +
+                            "   ID: " + resultSet.getInt(3) + "\n");
                 }
             } else
                 searchResultArea.clear();
