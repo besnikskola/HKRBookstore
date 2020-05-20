@@ -7,12 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -45,12 +47,54 @@ public class StoreController extends SQLConnector implements Initializable {
     @FXML
     private TextArea searchResultArea;
 
+    @FXML
+    private Button bookid;
+
+    @FXML
+    private Button bookid2;
+
+    @FXML
+    private TextField addTextfield;
+
+    @FXML
+    private TextField removeTextfield;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button removeButton;
+
+    @FXML
+    private Button checkoutButton;
+
+    @FXML
+    private Button ShoppingList;
+
+    @FXML
+    private TextArea listTextarea;
+
+    @FXML
+    private TextArea top5Textarea;
+
+    @FXML
+    private Button sellingBooksBtn;
+
     static ArrayList<Book> arrListBooks = new ArrayList<Book>();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        bookid.setVisible(false);
+        bookid2.setVisible(false);
+        addTextfield.setVisible(false);
+        removeTextfield.setVisible(false);
+        addButton.setVisible(false);
+        removeButton.setVisible(false);
+        checkoutButton.setVisible(false);
+        ShoppingList.setVisible(false);
+        listTextarea.setVisible(false);
+        top5Textarea.setVisible(false);
         connect();
         arrListBooks = loadBooks();
         searchBookTextField.setOnKeyReleased(keyEvent -> relevantSearchMethod());
@@ -58,8 +102,19 @@ public class StoreController extends SQLConnector implements Initializable {
             System.out.println("Is logged in as: " + LoginController.user.toString());
             signUpBtn.setVisible(false);
             logInBtn.setVisible(false);
+            top5Textarea.setVisible(false);
+            sellingBooksBtn.setVisible(false);
             signOutBtn.setVisible(true);
             editInfoBtn.setVisible(true);
+            bookid.setVisible(true);
+            bookid2.setVisible(true);
+            addTextfield.setVisible(true);
+            removeTextfield.setVisible(true);
+            addButton.setVisible(true);
+            removeButton.setVisible(true);
+            ShoppingList.setVisible(true);
+            listTextarea.setVisible(true);
+
             if (LoginController.user.getIsEmployee()) {
                 editBooksBtn.setVisible(true);
                 addBookBtn.setVisible(true);
@@ -69,6 +124,8 @@ public class StoreController extends SQLConnector implements Initializable {
         }
 
     }
+
+    SQLConnector sql = new SQLConnector();
 
     //for book search
     private void relevantSearchMethod() {
@@ -92,6 +149,80 @@ public class StoreController extends SQLConnector implements Initializable {
             System.out.println(sq.getMessage());
         }
     }
+
+
+    @FXML
+    public void AddToCart() throws SQLException {
+
+        String bookid = addTextfield.getText();
+        boolean validated = sql.BookAvailability(bookid);
+
+        if (validated) {
+            addTextfield.clear();
+
+            listTextarea.clear();
+            listTextarea.appendText(String.valueOf(cart));
+            checkoutButton.setVisible(true);
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Id not valid.");
+            alert.setTitle("Error");
+            alert.setContentText("Book not found. Please try again.");
+            alert.show();
+            addTextfield.clear();
+
+
+        }
+    }
+
+    @FXML
+    public void RemoveBooksFromCart() {
+
+
+        String id = removeTextfield.getText();
+
+        boolean validated = sql.RemoveFromCart(id);
+
+        if (validated) {
+            System.out.println("Book is in cart.");
+            listTextarea.clear();
+            listTextarea.appendText(String.valueOf(cart));
+            removeTextfield.clear();
+            if (cart.size()==0){
+                checkoutButton.setVisible(false);
+            }
+
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Id not valid.");
+            alert.setTitle("Error");
+            alert.setContentText("Book could not be removed. Please try again.");
+            alert.show();
+            removeTextfield.clear();
+
+
+        }
+
+    }
+    @FXML
+    private void TopSellers(){
+        FamousBooks();
+
+        do {
+           PrintFamousBooks();
+        }
+        while (FamousBooks.size() > 0);
+        top5Textarea.clear();
+        top5Textarea.appendText(String.valueOf(PrintTop5));
+
+
+        sellingBooksBtn.setVisible(false);
+        top5Textarea.setVisible(true);
+
+    }
+
 
     @FXML
     public void signOut(ActionEvent event) throws IOException {
@@ -151,10 +282,14 @@ public class StoreController extends SQLConnector implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
             stage.setScene(new Scene(root));
             stage.show();
+        } else if (event.getSource().toString().contains("checkoutButton")) {
+            Parent root = FXMLLoader.load(getClass().getResource("Checkout.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
+
         }
 
     }
-
 }
 
 

@@ -28,25 +28,25 @@
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="infoBtn" layoutX="138.0" layoutY="96.0" mnemonicParsing="false" onAction="#changeScene" style="-fx-background-color: #FFFFFF;" text="Help" textOverrun="CLIP">
+            <Button fx:id="infoBtn" layoutX="898.0" layoutY="95.0" mnemonicParsing="false" onAction="#changeScene" style="-fx-background-color: #FFFFFF;" text="Help" textOverrun="CLIP">
                <font>
                   <Font name="System Bold Italic" size="25.0" />
                </font>
             </Button>
-            <Button fx:id="searchForBookBtn" layoutX="511.0" layoutY="95.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Search for Book">
+            <Button fx:id="searchForBookBtn" layoutX="536.0" layoutY="94.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Search for Book">
                <font>
                   <Font name="System Bold Italic" size="25.0" />
                </font>
             </Button>
-            <Button layoutX="291.0" layoutY="395.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="244.0" style="-fx-background-color: #A1B56C;" text="Add to cart">
+            <Button fx:id="addButton" layoutX="188.0" layoutY="408.0" mnemonicParsing="false" onAction="#AddToCart" prefHeight="41.0" prefWidth="170.0" style="-fx-background-color: #F7CA85;" text="Add to cart">
                <font>
-                  <Font name="System Bold Italic" size="25.0" />
+                  <Font name="System Bold Italic" size="17.0" />
                </font>
             </Button>
-            <TextField fx:id="searchBookTextField" layoutX="281.0" layoutY="101.0" prefHeight="41.0" prefWidth="218.0" />
+            <TextField fx:id="searchBookTextField" layoutX="138.0" layoutY="101.0" prefHeight="41.0" prefWidth="334.0" />
             <Line endX="100.0" startX="-100.0" />
-            <Line endX="-100.0" endY="-52.5" layoutX="356.0" layoutY="154.0" startX="-100.0" startY="-13.5" />
-            <Line endX="-100.0" endY="37.5" layoutX="845.0" layoutY="102.0" startX="-100.0" />
+            <Line endX="-100.0" endY="-52.5" layoutX="227.0" layoutY="154.0" startX="-100.0" startY="-13.5" />
+            <Line endX="-100.0" endY="37.5" layoutX="918.0" layoutY="102.0" startX="-100.0" />
             <Label layoutX="5.0" layoutY="126.0" prefHeight="207.0" prefWidth="552.0" />
             <ImageView fitHeight="41.0" fitWidth="70.0" layoutX="645.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -58,22 +58,22 @@
                   <Image url="@../hkr-bokhandel.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="36.0" fitWidth="73.0" layoutX="155.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="38.0" fitWidth="62.0" layoutX="962.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../gubbe.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="65.0" fitWidth="29.0" layoutX="214.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="65.0" fitWidth="29.0" layoutX="979.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../123.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="22.0" layoutX="500.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="29.0" fitWidth="22.0" layoutX="487.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Searchicon2.png" />
                </image>
             </ImageView>
-            <TextArea fx:id="searchResultArea" layoutX="283.0" layoutY="155.0" prefHeight="113.0" prefWidth="216.0" />
+            <TextArea fx:id="searchResultArea" layoutX="138.0" layoutY="151.0" prefHeight="113.0" prefWidth="334.0" />
             <ImageView fitHeight="24.0" fitWidth="45.0" layoutX="520.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../gubbeMedGlasögon.png" />
@@ -99,7 +99,7 @@
                   <Font name="System Bold Italic" size="11.0" />
                </font>
             </Button>
-            <Button fx:id="viewBookListBtn" layoutX="281.0" layoutY="286.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="41.0" prefWidth="218.0" style="-fx-background-color: #F7CA85;" text="View whole Booklist">
+            <Button fx:id="viewBookListBtn" layoutX="138.0" layoutY="277.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="41.0" prefWidth="334.0" style="-fx-background-color: #F7CA85;" text="View whole Booklist">
                <font>
                   <Font size="18.0" />
                </font>
@@ -124,55 +124,46 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="291.0" layoutY="463.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="244.0" style="-fx-background-color: #BA8BAF;" text="Remove from cart">
+            <Button fx:id="removeButton" layoutX="186.0" layoutY="463.0" mnemonicParsing="false" onAction="#RemoveBooksFromCart" prefHeight="41.0" prefWidth="170.0" style="-fx-background-color: #F70485;" text="Remove from cart">
                <font>
-                  <Font name="System Bold Italic" size="25.0" />
+                  <Font name="System Bold Italic" size="17.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="395.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="201.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A1B56C;" text="Enter Book-ID">
+            <Button fx:id="bookid" layoutX="2.0" layoutY="408.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="138.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #F7CA85;" text="Enter Book-ID">
                <font>
-                  <Font name="System Bold Italic" size="25.0" />
+                  <Font name="System Bold Italic" size="17.0" />
                </font>
             </Button>
-            <TextField layoutX="211.0" layoutY="395.0" prefHeight="56.0" prefWidth="80.0" style="-fx-border-color: #A1B56C;" />
-            <Button layoutX="10.0" layoutY="463.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="201.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #BA8BAF;" text="Enter Book-ID">
+            <TextField fx:id="addTextfield" layoutX="140.0" layoutY="409.0" prefHeight="39.0" prefWidth="48.0" style="-fx-border-color: #F7CA85;" />
+            <Button fx:id="bookid2" layoutX="2.0" layoutY="463.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="138.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #F70485;" text="Enter Book-ID">
                <font>
-                  <Font name="System Bold Italic" size="25.0" />
+                  <Font name="System Bold Italic" size="17.0" />
                </font>
             </Button>
-            <TextField layoutX="211.0" layoutY="463.0" prefHeight="56.0" prefWidth="80.0" style="-fx-border-color: #BA8BAF;" />
-            <Button fx:id="addToCartBtn112" layoutX="534.0" layoutY="395.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A1B56C;">
-               <font>
-                  <Font name="System Bold Italic" size="25.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="546.0" layoutY="405.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../charticon.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="addToCartBtn1121" layoutX="534.0" layoutY="463.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #BA8BAF;">
-               <font>
-                  <Font name="System Bold Italic" size="25.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="546.0" layoutY="473.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../charticon.png" />
-               </image>
-            </ImageView>
-            <TextArea layoutX="598.0" layoutY="382.0" prefHeight="218.0" prefWidth="461.0" />
+            <TextField fx:id="removeTextfield" layoutX="140.0" layoutY="463.0" prefHeight="41.0" prefWidth="48.0" style="-fx-border-color: #F70485;" />
+            <TextArea fx:id="listTextarea" layoutX="361.0" layoutY="382.0" prefHeight="218.0" prefWidth="698.0" />
             <Line endX="797.0" layoutX="262.0" layoutY="382.0" startX="-269.0" />
-            <Button layoutX="679.0" layoutY="326.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="279.0" style="-fx-background-color: #FFFFFF;" text="ShoppingList">
+            <Button fx:id="ShoppingList" layoutX="842.0" layoutY="343.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="201.0" style="-fx-background-color: #FFFFFF;" text="ShoppingList">
                <font>
-                  <Font name="Arial Narrow" size="44.0" />
+                  <Font name="System Bold" size="26.0" />
                </font>
             </Button>
-            <Button layoutX="11.0" layoutY="536.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="582.0" style="-fx-background-color: #D8D8D8;" text="Check-out">
+            <Button fx:id="checkoutButton" layoutX="11.0" layoutY="560.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="38.0" prefWidth="348.0" style="-fx-background-color: #F7CA85;" text="Check-out">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+            </Button>
+            <TextArea fx:id="top5Textarea" layoutX="569.0" layoutY="216.0" prefHeight="288.0" prefWidth="323.0" />
+            <Button fx:id="sellingBooksBtn" layoutX="569.0" layoutY="216.0" mnemonicParsing="false" onAction="#TopSellers" prefHeight="288.0" prefWidth="323.0" style="-fx-background-color: #F70485;" text="View Best Selling Books" textOverrun="CLIP">
                <font>
                   <Font name="System Bold Italic" size="25.0" />
                </font>
             </Button>
+            <ImageView fitHeight="38.0" fitWidth="62.0" layoutX="495.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gubbe.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </children>

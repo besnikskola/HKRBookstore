@@ -8,30 +8,36 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="1058.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CheckoutController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="612.0" prefWidth="1058.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CheckoutController">
    <children>
       <Line endX="788.0" layoutX="269.0" layoutY="94.0" startX="-269.0" />
       <Line endX="100.0" startX="-100.0" />
-      <Button layoutX="832.0" layoutY="537.0" mnemonicParsing="false" onAction="#HKRSite" prefHeight="41.0" prefWidth="177.0" style="-fx-background-color: #F7CA85;" text="HKRś Bokhandel">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <TextArea layoutX="805.0" layoutY="161.0" prefHeight="296.0" prefWidth="212.0" />
-      <ImageView fitHeight="66.0" fitWidth="86.0" layoutX="26.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="85.0" fitWidth="113.0" layoutX="14.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../hkr-bokhandel.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="418.0" fitWidth="648.0" layoutX="33.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../hkr-bokhandel.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="68.0" fitWidth="107.0" layoutX="281.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+      <TextArea fx:id="ViewCart" layoutX="511.0" layoutY="171.0" prefHeight="218.0" prefWidth="547.0" />
+      <Line endX="797.0" layoutX="265.0" layoutY="171.0" startX="-269.0" />
+      <ImageView fitHeight="38.0" fitWidth="62.0" layoutX="560.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../gubbe.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="218.0" fitWidth="294.0" layoutX="67.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../hkr-bokhandel.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="511.0" layoutY="396.0" mnemonicParsing="false" onAction="#ViewList" prefHeight="41.0" prefWidth="533.0" style="-fx-background-color: #F7CA85;" text="View Cart Information">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font>
+      </Button>
+      <Button layoutX="856.0" layoutY="542.0" mnemonicParsing="false" onAction="#CheckOut" prefHeight="41.0" prefWidth="170.0" style="-fx-background-color: #F7CA85;" text="approve purchase ">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
