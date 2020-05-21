@@ -98,7 +98,7 @@
       <Line endX="-100.0" endY="170.5" layoutX="281.0" layoutY="178.0" startX="-100.0" startY="131.5" />
       <Line endX="-100.0" endY="170.5" layoutX="417.0" layoutY="178.0" startX="-100.0" startY="131.5" />
       <Line endX="221.5" layoutX="284.0" layoutY="298.0" startX="-269.0" />
-      <CheckBox fx:id="remQuantityCheckBox" layoutX="652.0" layoutY="307.0" mnemonicParsing="false" />
+      <CheckBox fx:id="remQuantityCheckBox" layoutX="652.0" layoutY="307.0" mnemonicParsing="false" onAction="#toggleRemoveEntireBook" />
       <TextArea fx:id="bookListTextArea" layoutX="552.0" layoutY="433.0" prefHeight="170.0" prefWidth="441.0" />
       <Label fx:id="remQuantityLabel1" layoutX="676.0" layoutY="309.0" text="Only remove quantity">
          <font>

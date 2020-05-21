@@ -52,6 +52,8 @@ public class EmployerMenuController implements Initializable {
     @FXML
     private Button remBookBtn;
 
+    boolean removeEntireBook = true;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
@@ -75,58 +77,64 @@ public class EmployerMenuController implements Initializable {
     @FXML
     public void addBook(ActionEvent event) {
         Alert alert = new Alert(null);
+        try {
 
 
-        if (hasText(event)) {
-            String title = titleTextField.getText();
-            String author = authorTextField.getText();
-            String genre = genreTextField.getText();
-            int quantity = Integer.parseInt(quantityTextField.getText());
-            double price = Double.parseDouble(priceTextField.getText());
+            if (hasText(event)) {
+                String title = titleTextField.getText();
+                String author = authorTextField.getText();
+                String genre = genreTextField.getText();
+                int quantity = Integer.parseInt(quantityTextField.getText());
+                double price = Double.parseDouble(priceTextField.getText());
 
-            Book book = new Book(null, title, author, genre, quantity, price);
-            int id = 0;
+                Book book = new Book(null, title, author, genre, quantity, price);
+                int id = 0;
 
-            for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
+                for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
 
-                System.out.println("VALUE OF ID IS: " + id);
+                    System.out.println("VALUE OF ID IS: " + id);
 
-                if (id <= StoreController.arrListBooks.get(i).getId()) {
-                    id = StoreController.arrListBooks.get(i).getId() + 1;
-                    System.out.println("ID HAS BEEN CHANGED TO: " + id);
+                    if (id <= StoreController.arrListBooks.get(i).getId()) {
+                        id = StoreController.arrListBooks.get(i).getId() + 1;
+                        System.out.println("ID HAS BEEN CHANGED TO: " + id);
+                    }
                 }
+
+                book.setId(id);
+
+                StoreController.arrListBooks.add(book);
+
+                sql.addBook(book);
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setContentText("The book " + titleTextField.getText() + " has been added to the database!");
+                alert.show();
+
+                titleTextField.clear();
+                authorTextField.clear();
+                genreTextField.clear();
+                quantityTextField.clear();
+                priceTextField.clear();
+                bookIdTextField.clear();
+                bookListTextArea.clear();
+
+                for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
+                    bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
+                }
+
+            } else {
+
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Please make sure all of the text fields have text in them.");
+                alert.show();
             }
-
-            book.setId(id);
-
-            StoreController.arrListBooks.add(book);
-
-            sql.addBook(book);
-            alert.setAlertType(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setContentText("The book " + titleTextField.getText() + " has been added to the database!");
-            alert.show();
-
-            titleTextField.clear();
-            authorTextField.clear();
-            genreTextField.clear();
-            quantityTextField.clear();
-            priceTextField.clear();
-            bookIdTextField.clear();
-            bookListTextArea.clear();
-
-            for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-                bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
-            }
-
-        } else {
-
+        } catch (NumberFormatException e) {
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setContentText("Please make sure all of the text fields have text in them.");
+            alert.setContentText("Please make sure you have valid input types for each textfield..");
             alert.show();
         }
-
 
     }
 
@@ -134,14 +142,6 @@ public class EmployerMenuController implements Initializable {
     public void removeBook(ActionEvent event) {
         Alert alert = new Alert(null);
         if (hasText(event)) {
-            boolean removeEntireBook = true;
-
-            if (remQuantityCheckBox.isSelected()) {
-                removeEntireBook = false;
-                remQuantityLabel.setVisible(true);
-                remQuantityTextField.setVisible(true);
-                System.out.println("Don't remove entire book.");
-            }
 
             if (removeEntireBook) {
                 try {
@@ -153,7 +153,7 @@ public class EmployerMenuController implements Initializable {
 
 
                     if (!bookIdTextField.getText().isEmpty()) {
-                        sql.removeBook(book);
+                        sql.removeBook(removeEntireBook, book, 0);
                         for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
                             if (StoreController.arrListBooks.get(i).getId() == remId) {
                                 System.out.println("Book " + StoreController.arrListBooks.get(i).getTitle() + " with BookID: "
@@ -187,11 +187,46 @@ public class EmployerMenuController implements Initializable {
                     alert.show();
                 }
             } else {
-                System.out.println("Remove only part.");
+                try {
+                System.out.println("Remove only quantity.");
+                int remId = Integer.parseInt(bookIdTextField.getText());
+                int quantity = Integer.parseInt(remQuantityTextField.getText());
+                Book book = new Book(null, null, null, null, null, remId);
+                book.setId(remId);
+
+                    System.out.println("Id of the book to have quantity removed: " + remId);
+                    System.out.println("Quantity to remove: " + quantity);
+
+                sql.removeBook(removeEntireBook, book, quantity);
+
+                bookIdTextField.clear();
+                remQuantityTextField.clear();
+
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Failure");
+                    alert.setContentText("Please enter a number instead of text.");
+                    alert.show();
+                }
+
             }
         }
     }
 
+    public void toggleRemoveEntireBook(ActionEvent event) {
+        if (remQuantityCheckBox.isSelected()) {
+            removeEntireBook = false;
+            remQuantityLabel.setVisible(true);
+            remQuantityTextField.setVisible(true);
+            System.out.println("Remove entire book: " + removeEntireBook);
+        } else {
+            removeEntireBook = true;
+            remQuantityLabel.setVisible(false);
+            remQuantityTextField.setVisible(false);
+            System.out.println("Remove entire book: " + removeEntireBook);
+        }
+    }
 
     public boolean hasText(ActionEvent event) {
         if (event.getSource().toString().contains("addBookBtn")) {

@@ -189,18 +189,30 @@ public class SQLConnector {
     }
 
 
-    public void removeBook(Book book) {
-        connect();
-
+    public void removeBook(boolean entireBook, Book book, int quantity) {
         try {
-            String sql = "DELETE FROM `books` WHERE `books`.`bookid` = " + book.getId();
-            statement = connection.createStatement();
-            statement.executeUpdate(sql);
+            connect();
 
+            System.out.println("SQL: Remove entire book: " + entireBook);
+
+            if (entireBook) {
+                String sql = "DELETE FROM `books` WHERE `books`.`bookid` = " + book.getId();
+                statement = connection.createStatement();
+                statement.executeUpdate(sql);
+
+            } else {
+                String sql = "UPDATE `books` SET `quantity` = `quantity` - " + quantity + " WHERE `bookid` = " + book.getId() + ";";
+
+                statement = connection.createStatement();
+                statement.executeUpdate(sql);
+
+                System.out.println("Book quantity has been removed.");
+
+            }
+            disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        disconnect();
     }
 
     public void changeUserInfo(User user) {
@@ -219,7 +231,7 @@ public class SQLConnector {
 
             int rowAffected = preparedStatement.executeUpdate();
 
-            System.out.println("Customer information successfully edited. Total of rows changed: " + rowAffected);
+            System.out.println("Customer information successfully updated. Total of rows changed: " + rowAffected);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -376,7 +388,6 @@ public class SQLConnector {
             statement = connection.createStatement();
             statement.executeUpdate(sql);
 
-
             bookID.remove(0);
             Quantity.remove(0);
 
@@ -474,16 +485,16 @@ public class SQLConnector {
     }
 
     public void PrintFamousBooks() {
-        String Top5=FamousBooks.get(0);
+        String Top5 = FamousBooks.get(0);
         try {
             connect();
             String sql = "SELECT title FROM books WHERE bookid='" + Top5 + "';";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 resultSet.getString("title");
-                PrintTop5.add(resultSet.getString("title")+"\n");
+                PrintTop5.add(resultSet.getString("title") + "\n");
                 FamousBooks.remove(0);
 
 
