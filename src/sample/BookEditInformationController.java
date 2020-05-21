@@ -69,7 +69,7 @@ public class BookEditInformationController implements Initializable {
             priceTextField.setText(String.valueOf(book.getPrice()));
             
         } catch (NullPointerException e) {
-            System.out.println("BookID summons nullpointerexception.");
+            System.out.println("This bookID summons nullpointerexception.");
             genreTextField.clear();
             titleTextField.clear();
             authorTextField.clear();
@@ -102,12 +102,12 @@ public class BookEditInformationController implements Initializable {
             seeStore(event);
         } catch (NumberFormatException e) {
 
-
             System.out.println("Error.");
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("An error has occurred");
             alert.setContentText("Please insert correct types for each textfield.");
             alert.show();
+
         } catch (IOException e) {
             System.out.println("Error.");
             alert.setAlertType(Alert.AlertType.ERROR);

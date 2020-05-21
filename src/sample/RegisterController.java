@@ -62,7 +62,7 @@ public class RegisterController implements Initializable {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
 
-        Parent root = FXMLLoader.load(getClass().getResource("LoginPicker.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 
         stage.setScene(new Scene(root));
         stage.show();
