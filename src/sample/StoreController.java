@@ -231,6 +231,7 @@ public class StoreController extends SQLConnector implements Initializable {
         LoginController.user = null;
         System.out.println("You have successfully signed out.");
         changeScene(event);
+        Email.clear();
     }
 
     @FXML
