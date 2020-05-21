@@ -54,7 +54,7 @@ public class UserEditInformationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        User user = lc.getUser();
+        User user = LoginController.user;
 
         emailTextField.setText(user.getEmail());
         firstnameTextField.setText(user.getFirstname());

@@ -14,7 +14,7 @@
    <children>
       <Line endX="788.0" layoutX="269.0" layoutY="94.0" startX="-269.0" />
       <Line endX="100.0" startX="-100.0" />
-      <TextField fx:id="bookIdTextField" layoutX="128.0" layoutY="217.0" prefHeight="51.0" prefWidth="89.0" />
+      <TextField fx:id="bookIdTextField" layoutX="128.0" layoutY="217.0" onKeyReleased="#updateFields" prefHeight="51.0" prefWidth="89.0" />
       <Label layoutX="128.0" layoutY="182.0" prefHeight="29.0" prefWidth="89.0" text="Book ID">
          <font>
             <Font name="Calibri" size="20.0" />

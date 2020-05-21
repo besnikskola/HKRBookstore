@@ -46,50 +46,60 @@ public class LoginController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("Customer1.fxml"));
     }
 
-    public void logIn(ActionEvent event) throws IOException {
+    public void logIn(ActionEvent event) {
 
-        String email = emailTextField.getText();
-        String password = passwordTextField.getText();
+        try {
+            String email = emailTextField.getText();
+            String password = passwordTextField.getText();
+            Alert alert = new Alert(null);
 
-        boolean validated = sql.verifyLogin(email, password);
-        if (validated) {
-            //create new user object  based on the column
-            user = sql.createUser(email, password);
-            isLoggedIn = true;
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            System.out.println("Logged in.");
-            alert.setTitle("Successfully logged in");
-            alert.setContentText("Welcome to the book store.");
-            alert.show();
-            emailTextField.clear();
-            passwordTextField.clear();
+            if (!emailTextField.getText().isEmpty() && !passwordTextField.getText().isEmpty()) {
+                boolean validated = sql.verifyLogin(email, password);
+                if (validated) {
+                    //create new user object  based on the column
+                    user = sql.createUser(email, password);
+                    isLoggedIn = true;
+                    System.out.println("Logged in.");
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successfully logged in");
+                    alert.setContentText("Welcome to the book store.");
+                    alert.show();
+                    emailTextField.clear();
+                    passwordTextField.clear();
 
-            changeScene(event);
+                    changeScene(event);
 
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            System.out.println("Not logged in.");
-            alert.setTitle("Error");
-            alert.setContentText("Invalid credentials. Please try again.");
-            alert.show();
-            emailTextField.clear();
-            passwordTextField.clear();
+                } else {
+                    System.out.println("Not logged in.");
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Invalid credentials. Please try again.");
+                    alert.show();
+                    emailTextField.clear();
+                    passwordTextField.clear();
+                }
+            } else {
+                System.out.println("Please enter text.");
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Please enter text on the textfields.");
+                alert.show();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
         }
-
 
     }
 
     @FXML
     public void changeScene(ActionEvent event) throws IOException {
-            Node node = (Node) event.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
-            stage.setScene(new Scene(root));
-            stage.show();
-    }
-
-    public User getUser() {
-        return user;
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 }
