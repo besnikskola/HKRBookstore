@@ -40,5 +40,10 @@
          </font>
       </Button>
       <TextArea fx:id="OrderEmail" layoutX="511.0" layoutY="348.0" prefHeight="24.0" prefWidth="547.0" />
+      <Button layoutX="16.0" layoutY="557.0" mnemonicParsing="false" onAction="#ContinueShopping" prefHeight="41.0" prefWidth="193.0" style="-fx-background-color: #F7CA85;" text="Continue Shopping">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

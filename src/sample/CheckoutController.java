@@ -29,12 +29,10 @@ import java.util.ResourceBundle;
 public class CheckoutController extends SQLConnector implements Initializable {
 
 
-   @FXML
-   private TextArea ViewCart;
-   @FXML
-   private TextArea OrderEmail;
-
-
+    @FXML
+    private TextArea ViewCart;
+    @FXML
+    private TextArea OrderEmail;
 
 
     @Override
@@ -46,20 +44,20 @@ public class CheckoutController extends SQLConnector implements Initializable {
     }
 
 
-@FXML
-public void ViewList() {
+    @FXML
+    public void ViewList() {
         ViewCart.clear();
-    ViewCart.appendText(String.valueOf(cart));
-    OrderEmail.appendText("Place a order on: "+Email.get(0));
+        ViewCart.appendText(String.valueOf(cart));
+        OrderEmail.appendText("Place an order on: " + Email.get(0));
 
-    ViewCart.setVisible(true);
-    OrderEmail.setVisible(true);
-}
+        ViewCart.setVisible(true);
+        OrderEmail.setVisible(true);
+    }
 
     @FXML
-    public void CheckOut (ActionEvent event) throws IOException {
+    public void CheckOut(ActionEvent event) throws IOException {
 
-    if (cart.size() > 0) {
+        if (cart.size() > 0) {
 
             do {
                 ReduceQuantity();
@@ -74,17 +72,17 @@ public void ViewList() {
             }
             while (IdBook.size() > 0);
 
-        ViewCart.clear();
-        ViewCart.appendText(String.valueOf(cart));
-        cart.clear();
+            ViewCart.clear();
+            ViewCart.appendText(String.valueOf(cart));
+            cart.clear();
 
 
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
 
-        stage.setScene(new Scene(root));
-        stage.show();
+            stage.setScene(new Scene(root));
+            stage.show();
 
 
         } else {
@@ -94,6 +92,17 @@ public void ViewList() {
             alert.setContentText("No book in cart");
             alert.show();
         }
+    }
+
+    @FXML
+    public void ContinueShopping(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+
+        Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
+
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
 
