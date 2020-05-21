@@ -67,7 +67,7 @@ public class BookEditInformationController implements Initializable {
             authorTextField.setText(book.getAuthor());
             quantityTextField.setText(String.valueOf(book.getQuantity()));
             priceTextField.setText(String.valueOf(book.getPrice()));
-            
+
         } catch (NullPointerException e) {
             System.out.println("This bookID summons nullpointerexception.");
             genreTextField.clear();
@@ -92,6 +92,17 @@ public class BookEditInformationController implements Initializable {
 
             Book changedBook = new Book(id, title, author, genre, quantity, price);
             sql.editBookInfo(changedBook);
+
+            for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
+                if (StoreController.arrListBooks.get(i).getId() == changedBook.getId()) {
+                    System.out.println("Book found in Array Loop.");
+                    StoreController.arrListBooks.get(i).setAuthor(changedBook.getAuthor());
+                    StoreController.arrListBooks.get(i).setGenre(changedBook.getGenre());
+                    StoreController.arrListBooks.get(i).setPrice(changedBook.getPrice());
+                    StoreController.arrListBooks.get(i).setQuantity(changedBook.getQuantity());
+                    System.out.println("Book info edited in arrListBooks.");
+                }
+            }
 
             alert.setAlertType(Alert.AlertType.INFORMATION);
             System.out.println("Changed.");
