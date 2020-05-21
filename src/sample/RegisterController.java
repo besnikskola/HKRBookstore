@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static sample.SQLConnector.Email;
 
 
 public class RegisterController implements Initializable {
@@ -87,6 +88,7 @@ public class RegisterController implements Initializable {
             sql.createUser(user);
             LoginController.user = user;
             LoginController.isLoggedIn = true;
+            Email.add(emailTextField.getText());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             System.out.println("Logged in.");

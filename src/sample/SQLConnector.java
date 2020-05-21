@@ -20,7 +20,7 @@ public class SQLConnector {
     static ArrayList<String> IdBook = new ArrayList<>();
     static ArrayList<String> OrderId = new ArrayList<>();
     static ArrayList<String> FamousBooks = new ArrayList<>();
-    static ArrayList<String> PrintTop5 = new ArrayList<>();
+
 
     int NewQuantity;
 
