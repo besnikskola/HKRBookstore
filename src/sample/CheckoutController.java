@@ -31,6 +31,8 @@ public class CheckoutController extends SQLConnector implements Initializable {
 
    @FXML
    private TextArea ViewCart;
+   @FXML
+   private TextArea OrderEmail;
 
 
 
@@ -39,6 +41,7 @@ public class CheckoutController extends SQLConnector implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         connect();
         ViewCart.setVisible(false);
+        OrderEmail.setVisible(false);
 
     }
 
@@ -47,12 +50,14 @@ public class CheckoutController extends SQLConnector implements Initializable {
 public void ViewList() {
         ViewCart.clear();
     ViewCart.appendText(String.valueOf(cart));
+    OrderEmail.appendText("Place a order on: "+Email.get(0));
 
     ViewCart.setVisible(true);
+    OrderEmail.setVisible(true);
 }
 
     @FXML
-    public void CheckOut() {
+    public void CheckOut (ActionEvent event) throws IOException {
 
     if (cart.size() > 0) {
 
@@ -71,6 +76,15 @@ public void ViewList() {
 
         ViewCart.clear();
         ViewCart.appendText(String.valueOf(cart));
+        cart.clear();
+
+
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
+
+        stage.setScene(new Scene(root));
+        stage.show();
 
 
         } else {

@@ -17,7 +17,7 @@
             <Image url="@../hkr-bokhandel.png" />
          </image>
       </ImageView>
-      <TextArea fx:id="ViewCart" layoutX="511.0" layoutY="171.0" prefHeight="218.0" prefWidth="547.0" />
+      <TextArea fx:id="ViewCart" layoutX="511.0" layoutY="171.0" prefHeight="181.0" prefWidth="547.0" />
       <Line endX="797.0" layoutX="265.0" layoutY="171.0" startX="-269.0" />
       <ImageView fitHeight="38.0" fitWidth="62.0" layoutX="560.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -39,5 +39,6 @@
             <Font name="System Bold Italic" size="17.0" />
          </font>
       </Button>
+      <TextArea fx:id="OrderEmail" layoutX="511.0" layoutY="348.0" prefHeight="24.0" prefWidth="547.0" />
    </children>
 </Pane>
