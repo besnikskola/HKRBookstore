@@ -211,12 +211,9 @@ public class StoreController extends SQLConnector implements Initializable {
     private void TopSellers(){
         FamousBooks();
 
-        do {
-           PrintFamousBooks();
-        }
-        while (FamousBooks.size() > 0);
+
         top5Textarea.clear();
-        top5Textarea.appendText(String.valueOf(PrintTop5));
+        top5Textarea.appendText(String.valueOf(FamousBooks));
 
 
         sellingBooksBtn.setVisible(false);

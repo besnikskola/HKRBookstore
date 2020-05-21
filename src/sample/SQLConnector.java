@@ -467,14 +467,14 @@ public class SQLConnector {
 
         try {
             connect();
-            String sql = "SELECT bookid, count(*) antal FROM orders_has_books group by bookid order by antal desc, bookid asc limit 5;";
+            String sql = "SELECT OBH.bookid, B.title, count(*) BookQuantity FROM orders_has_books OBH JOIN Books B on OBH.bookid = B.bookid group by OBH.bookid order by BookQuantity desc, OBH.bookid asc limit 5;";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                resultSet.getString("bookid");
-                System.out.println(resultSet.getString("bookid"));
-                FamousBooks.add(resultSet.getString("bookid"));
+                resultSet.getString("B.title");
+                System.out.println(resultSet.getString("B.title"));
+                FamousBooks.add(resultSet.getString("B.title") + "\n");
             }
             System.out.println(FamousBooks);
 
@@ -483,28 +483,9 @@ public class SQLConnector {
             e.printStackTrace();
         }
     }
-
-    public void PrintFamousBooks() {
-        String Top5 = FamousBooks.get(0);
-        try {
-            connect();
-            String sql = "SELECT title FROM books WHERE bookid='" + Top5 + "';";
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                resultSet.getString("title");
-                PrintTop5.add(resultSet.getString("title") + "\n");
-                FamousBooks.remove(0);
-
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
+
+
 
 
 
