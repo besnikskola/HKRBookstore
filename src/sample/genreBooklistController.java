@@ -96,7 +96,7 @@ public class genreBooklistController extends StoreController implements Initiali
 
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("Genre.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
 
         stage.setScene(new Scene(root));
         stage.show();

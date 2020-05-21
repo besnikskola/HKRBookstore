@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" prefHeight="607.0" prefWidth="1058.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StoreController">
+<GridPane alignment="center" hgap="10" prefHeight="607.0" prefWidth="1058.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StoreController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="612.0" prefWidth="1058.0" style="-fx-background-color: #FFFFFF;" GridPane.rowIndex="1">
          <children>
@@ -74,31 +74,6 @@
                </image>
             </ImageView>
             <TextArea fx:id="searchResultArea" layoutX="138.0" layoutY="151.0" prefHeight="113.0" prefWidth="334.0" />
-            <ImageView fitHeight="24.0" fitWidth="45.0" layoutX="520.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gubbeMedGlasögon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="87.0" fitWidth="133.0" layoutX="400.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pratbubblaGul.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="optionBtn" layoutX="418.0" layoutY="22.0" mnemonicParsing="false" onAction="#changeScene" style="-fx-background-color: #FFFFFF;" text="Click here to" textOverrun="CLIP">
-               <font>
-                  <Font name="System Bold Italic" size="11.0" />
-               </font>
-            </Button>
-            <Button fx:id="optionBtn2" layoutX="417.0" layoutY="43.0" mnemonicParsing="false" onAction="#changeScene" style="-fx-background-color: #FFFFFF;" text="change search " textOverrun="CLIP">
-               <font>
-                  <Font name="System Bold Italic" size="11.0" />
-               </font>
-            </Button>
-            <Button fx:id="optionBtn3" layoutX="442.0" layoutY="60.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="22.0" prefWidth="62.0" style="-fx-background-color: #FFFFFF;" text=" options" textOverrun="CLIP">
-               <font>
-                  <Font name="System Bold Italic" size="11.0" />
-               </font>
-            </Button>
             <Button fx:id="viewBookListBtn" layoutX="138.0" layoutY="277.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="41.0" prefWidth="334.0" style="-fx-background-color: #F7CA85;" text="View whole Booklist">
                <font>
                   <Font size="18.0" />
@@ -153,8 +128,8 @@
                   <Font name="System Bold Italic" size="17.0" />
                </font>
             </Button>
-            <TextArea fx:id="top5Textarea" layoutX="569.0" layoutY="216.0" prefHeight="288.0" prefWidth="323.0" />
-            <Button fx:id="sellingBooksBtn" layoutX="569.0" layoutY="216.0" mnemonicParsing="false" onAction="#TopSellers" prefHeight="288.0" prefWidth="323.0" style="-fx-background-color: #F70485;" text="View Best Selling Books" textOverrun="CLIP">
+            <TextArea fx:id="top5Textarea" layoutX="705.0" layoutY="298.0" prefHeight="288.0" prefWidth="323.0" />
+            <Button fx:id="sellingBooksBtn" layoutX="705.0" layoutY="298.0" mnemonicParsing="false" onAction="#TopSellers" prefHeight="288.0" prefWidth="323.0" style="-fx-background-color: #F70485;" text="View Best Selling Books" textOverrun="CLIP">
                <font>
                   <Font name="System Bold Italic" size="25.0" />
                </font>
