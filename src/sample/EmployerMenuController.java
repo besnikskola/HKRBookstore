@@ -188,19 +188,32 @@ public class EmployerMenuController implements Initializable {
                 }
             } else {
                 try {
-                System.out.println("Remove only quantity.");
-                int remId = Integer.parseInt(bookIdTextField.getText());
-                int quantity = Integer.parseInt(remQuantityTextField.getText());
-                Book book = new Book(null, null, null, null, null, remId);
-                book.setId(remId);
+                    System.out.println("Remove only quantity.");
+                    int remId = Integer.parseInt(bookIdTextField.getText());
+                    int quantity = Integer.parseInt(remQuantityTextField.getText());
+                    Book book = new Book(null, null, null, null, null, remId);
+                    book.setId(remId);
 
                     System.out.println("Id of the book to have quantity removed: " + remId);
                     System.out.println("Quantity to remove: " + quantity);
 
-                sql.removeBook(removeEntireBook, book, quantity);
+                    sql.removeBook(removeEntireBook, book, quantity);
 
-                bookIdTextField.clear();
-                remQuantityTextField.clear();
+                    for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
+                        if (StoreController.arrListBooks.get(i).getId() == remId) {
+                            int currentQuantity = StoreController.arrListBooks.get(i).getQuantity();
+                            StoreController.arrListBooks.get(i).setQuantity(currentQuantity - quantity);
+                            System.out.println("Remove quantity has been applied onto arrListBooks.");
+                        }
+                    }
+
+                    bookIdTextField.clear();
+                    remQuantityTextField.clear();
+                    bookListTextArea.clear();
+
+                    for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
+                        bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
+                    }
 
                 } catch (NumberFormatException e) {
                     e.printStackTrace();

@@ -13,8 +13,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -82,6 +80,8 @@ public class StoreController extends SQLConnector implements Initializable {
 
     static ArrayList<Book> arrListBooks = new ArrayList<Book>();
 
+    static boolean hasLoadedBooks = false;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,8 +95,12 @@ public class StoreController extends SQLConnector implements Initializable {
         ShoppingList.setVisible(false);
         listTextarea.setVisible(false);
         top5Textarea.setVisible(false);
-        connect();
-        arrListBooks = loadBooks();
+
+        if (!hasLoadedBooks) {
+            connect();
+            arrListBooks = loadBooks();
+            hasLoadedBooks = true;
+        }
         searchBookTextField.setOnKeyReleased(keyEvent -> relevantSearchMethod());
         if (LoginController.isLoggedIn) {
             System.out.println("Is logged in as: " + LoginController.user.toString());
