@@ -56,8 +56,8 @@ public class EmployerMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-            bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
+        for (Book element : StoreController.arrListBooks) {
+            bookListTextArea.insertText(0, element.toString() + "\n");
         }
     }
 
@@ -90,12 +90,12 @@ public class EmployerMenuController implements Initializable {
                 Book book = new Book(null, title, author, genre, quantity, price);
                 int id = 0;
 
-                for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
+                for (Book element : StoreController.arrListBooks) {
 
                     System.out.println("VALUE OF ID IS: " + id);
 
-                    if (id <= StoreController.arrListBooks.get(i).getId()) {
-                        id = StoreController.arrListBooks.get(i).getId() + 1;
+                    if (id <= element.getId()) {
+                        id = element.getId() + 1;
                         System.out.println("ID HAS BEEN CHANGED TO: " + id);
                     }
                 }
@@ -118,8 +118,8 @@ public class EmployerMenuController implements Initializable {
                 bookIdTextField.clear();
                 bookListTextArea.clear();
 
-                for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-                    bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
+                for (Book element : StoreController.arrListBooks) {
+                    bookListTextArea.insertText(0, element.toString() + "\n");
                 }
 
             } else {
@@ -154,13 +154,8 @@ public class EmployerMenuController implements Initializable {
 
                     if (!bookIdTextField.getText().isEmpty()) {
                         sql.removeBook(removeEntireBook, book, 0);
-                        for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-                            if (StoreController.arrListBooks.get(i).getId() == remId) {
-                                System.out.println("Book " + StoreController.arrListBooks.get(i).getTitle() + " with BookID: "
-                                        + StoreController.arrListBooks.get(i).getId() + " has been removed from arrListBooks.");
-                                StoreController.arrListBooks.remove(i);
-                            }
-                        }
+                        StoreController.arrListBooks.removeIf(e -> (e.getId() == remId));
+                        System.out.println("Book has been removed from arrListBooks.");
 
                         alert.setAlertType(Alert.AlertType.INFORMATION);
                         alert.setTitle("Success");
@@ -169,8 +164,8 @@ public class EmployerMenuController implements Initializable {
                         bookIdTextField.clear();
                         bookListTextArea.clear();
 
-                        for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-                            bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
+                        for (Book element : StoreController.arrListBooks) {
+                            bookListTextArea.insertText(0, element.toString() + "\n");
                         }
 
                     } else {
@@ -199,10 +194,9 @@ public class EmployerMenuController implements Initializable {
 
                     sql.removeBook(removeEntireBook, book, quantity);
 
-                    for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-                        if (StoreController.arrListBooks.get(i).getId() == remId) {
-                            int currentQuantity = StoreController.arrListBooks.get(i).getQuantity();
-                            StoreController.arrListBooks.get(i).setQuantity(currentQuantity - quantity);
+                    for (Book element : StoreController.arrListBooks) {
+                        if (element.getId() == remId) {
+                            element.setQuantity(element.getQuantity() - quantity);
                             System.out.println("Remove quantity has been applied onto arrListBooks.");
                         }
                     }
@@ -211,8 +205,8 @@ public class EmployerMenuController implements Initializable {
                     remQuantityTextField.clear();
                     bookListTextArea.clear();
 
-                    for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-                        bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
+                    for (Book element : StoreController.arrListBooks) {
+                        bookListTextArea.insertText(0, element.toString() + "\n");
                     }
 
                 } catch (NumberFormatException e) {
@@ -232,13 +226,12 @@ public class EmployerMenuController implements Initializable {
             removeEntireBook = false;
             remQuantityLabel.setVisible(true);
             remQuantityTextField.setVisible(true);
-            System.out.println("Remove entire book: " + removeEntireBook);
         } else {
             removeEntireBook = true;
             remQuantityLabel.setVisible(false);
             remQuantityTextField.setVisible(false);
-            System.out.println("Remove entire book: " + removeEntireBook);
         }
+        System.out.println("Remove entire book: " + removeEntireBook);
     }
 
     public boolean hasText(ActionEvent event) {

@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -55,18 +54,18 @@ public class BookEditInformationController implements Initializable {
     public void updateFields(KeyEvent event) {
 
         try {
-            Book book = null;
-            for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-                if (String.valueOf(StoreController.arrListBooks.get(i).getId()).equals(bookIdTextField.getText())) {
-                    book = StoreController.arrListBooks.get(i);
+            Book bookUpdate;
+            for (Book element : StoreController.arrListBooks) {
+                if (String.valueOf(element.getId()).equals(bookIdTextField.getText())) {
+                    System.out.println("Found the book.");
+                    bookUpdate = element;
+                    genreTextField.setText(bookUpdate.getGenre());
+                    titleTextField.setText(bookUpdate.getTitle());
+                    authorTextField.setText(bookUpdate.getAuthor());
+                    quantityTextField.setText(String.valueOf(bookUpdate.getQuantity()));
+                    priceTextField.setText(String.valueOf(bookUpdate.getPrice()));
                 }
             }
-            assert book != null;
-            genreTextField.setText(book.getGenre());
-            titleTextField.setText(book.getTitle());
-            authorTextField.setText(book.getAuthor());
-            quantityTextField.setText(String.valueOf(book.getQuantity()));
-            priceTextField.setText(String.valueOf(book.getPrice()));
 
         } catch (NullPointerException e) {
             System.out.println("This bookID summons nullpointerexception.");
@@ -93,13 +92,15 @@ public class BookEditInformationController implements Initializable {
             Book changedBook = new Book(id, title, author, genre, quantity, price);
             sql.editBookInfo(changedBook);
 
-            for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-                if (StoreController.arrListBooks.get(i).getId() == changedBook.getId()) {
+            for (Book element : StoreController.arrListBooks) {
+
+                if (element.getId() == changedBook.getId()) {
+
                     System.out.println("Book found in Array Loop.");
-                    StoreController.arrListBooks.get(i).setAuthor(changedBook.getAuthor());
-                    StoreController.arrListBooks.get(i).setGenre(changedBook.getGenre());
-                    StoreController.arrListBooks.get(i).setPrice(changedBook.getPrice());
-                    StoreController.arrListBooks.get(i).setQuantity(changedBook.getQuantity());
+                    element.setAuthor(changedBook.getAuthor());
+                    element.setGenre(changedBook.getGenre());
+                    element.setPrice(changedBook.getQuantity());
+                    element.setQuantity(changedBook.getQuantity());
                     System.out.println("Book info edited in arrListBooks.");
                 }
             }
@@ -110,7 +111,10 @@ public class BookEditInformationController implements Initializable {
             alert.setContentText("Your information has successfully been changed..");
             alert.show();
 
-            seeStore(event);
+            for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
+                bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
+            }
+
         } catch (NumberFormatException e) {
 
             System.out.println("Error.");
@@ -118,14 +122,6 @@ public class BookEditInformationController implements Initializable {
             alert.setTitle("An error has occurred");
             alert.setContentText("Please insert correct types for each textfield.");
             alert.show();
-
-        } catch (IOException e) {
-            System.out.println("Error.");
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("An error has occurred");
-            alert.setContentText("Please insert correct types for each textfield.");
-            alert.show();
-            e.printStackTrace();
         }
 
     }
