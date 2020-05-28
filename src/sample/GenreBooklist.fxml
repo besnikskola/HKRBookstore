@@ -5,13 +5,14 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="1058.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.genreBooklistController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="1058.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.genreBooklistController">
    <children>
       <Line endX="788.0" layoutX="269.0" layoutY="94.0" startX="-269.0" />
       <Line endX="100.0" startX="-100.0" />
@@ -50,7 +51,7 @@
          </image>
       </ImageView>
       <ListView fx:id="genreView" layoutX="118.0" layoutY="161.0" prefHeight="259.0" prefWidth="153.0" />
-      <TableView fx:id="genreBookTable" layoutX="278.0" layoutY="161.0" prefHeight="259.0" prefWidth="660.0">
+      <TableView fx:id="genreBookTable" layoutX="278.0" layoutY="161.0" onMouseClicked="#MouseClicked" prefHeight="259.0" prefWidth="660.0">
         <columns>
           <TableColumn fx:id="genreTitleCol" prefWidth="219.0" text="Title" />
           <TableColumn fx:id="genreAuthorCol" prefWidth="212.0" text="Author" />
@@ -59,5 +60,16 @@
             <TableColumn fx:id="genreIdCol" prefWidth="53.0" text="ID" />
         </columns>
       </TableView>
+      <Button fx:id="id" layoutX="128.0" layoutY="479.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: #FFFFFF;" text="Book id:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="idField" layoutX="207.0" layoutY="479.0" prefHeight="31.0" prefWidth="51.0" />
+      <Button fx:id="add" layoutX="268.0" layoutY="479.0" mnemonicParsing="false" onAction="#AddByGenre" prefHeight="31.0" prefWidth="201.0" style="-fx-background-color: #86C1B9;" text="Add To Cart">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

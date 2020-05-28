@@ -9,15 +9,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -30,6 +28,9 @@ public class genreBooklistController extends StoreController implements Initiali
     @FXML private TableColumn<Book, Integer> genreQuantityCol = new TableColumn<>();
     @FXML private TableColumn<Book, Double> genrePriceCol = new TableColumn<>();
     @FXML private TableColumn<Book, Integer> genreIdCol = new TableColumn<>();
+    @FXML private TextField idField;
+    @FXML private Button id;
+    @FXML private Button add;
 
     private ArrayList <Book> genreBookArray = new ArrayList<>(arrListBooks);
 
@@ -56,6 +57,9 @@ public class genreBooklistController extends StoreController implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        idField.setVisible(false);
+        id.setVisible(false);
+        add.setVisible(false);
 
         genreFilter();
 
@@ -75,6 +79,44 @@ public class genreBooklistController extends StoreController implements Initiali
             genreIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             genreBookTable.setItems(obsBooks());
         });
+        if (LoginController.isLoggedIn){
+            idField.setVisible(true);
+            id.setVisible(true);
+            add.setVisible(true);
+        }
+
+
+    }
+    @FXML
+    public void MouseClicked(){
+
+        TablePosition pos = (TablePosition) genreBookTable.getSelectionModel().getSelectedCells().get(0);
+        int index = pos.getRow();
+        String selected = genreBookTable.getItems().get(index).toString();
+        selected = selected.substring(9, selected.indexOf(","));
+        System.out.println(selected);
+        idField.setText(selected);
+
+
+    }
+
+    @FXML
+    public void AddByGenre() throws SQLException {
+
+        String bookid = idField.getText();
+        boolean validated = sql.BookAvailability(bookid);
+
+        if (validated) {
+            idField.clear();
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Id not valid.");
+            alert.setTitle("Error");
+            alert.setContentText("Book not found. Please try again.");
+            alert.show();
+            idField.clear();
+        }
 
 
     }

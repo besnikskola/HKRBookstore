@@ -9,13 +9,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -29,6 +29,9 @@ public class BooklistController extends StoreController implements Initializable
     @FXML private TableColumn<Book, Integer> quantityCol = new TableColumn<>();
     @FXML private TableColumn<Book, Double> priceCol = new TableColumn<>();
     @FXML private TableColumn<Book, Integer> idCol = new TableColumn<>();
+    @FXML private TextField idField;
+    @FXML private Button id;
+    @FXML private Button add;
 
     private ArrayList<Book> abcBookList = new ArrayList<>(arrListBooks);
 
@@ -48,6 +51,9 @@ public class BooklistController extends StoreController implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        idField.setVisible(false);
+        id.setVisible(false);
+        add.setVisible(false);
 
         filter();
 
@@ -56,9 +62,49 @@ public class BooklistController extends StoreController implements Initializable
         genreCol.setCellValueFactory(new PropertyValueFactory<>("genre"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        idCol.setCellValueFactory(new  PropertyValueFactory<>("id"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         bookTable.setItems(obsBooks());
+
+
+        if (LoginController.isLoggedIn) {
+            idField.setVisible(true);
+            id.setVisible(true);
+            add.setVisible(true);
+        }
+    }
+    @FXML
+    public void jTableMouseClicked(){
+
+        TablePosition pos = (TablePosition) bookTable.getSelectionModel().getSelectedCells().get(0);
+        int index = pos.getRow();
+        String selected = bookTable.getItems().get(index).toString();
+        selected = selected.substring(9, selected.indexOf(","));
+        System.out.println(selected);
+
+        idField.setText(selected);
+
+
+
+    }
+    @FXML
+    public void AddByAlphabeticallyOrder() throws SQLException {
+
+        String bookid = idField.getText();
+        boolean validated = sql.BookAvailability(bookid);
+
+        if (validated) {
+            idField.clear();
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Id not valid.");
+            alert.setTitle("Error");
+            alert.setContentText("Book not found. Please try again.");
+            alert.show();
+            idField.clear();
+        }
+
 
     }
 

@@ -85,6 +85,8 @@ public class StoreController extends SQLConnector implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        listTextarea.clear();
+        listTextarea.appendText(String.valueOf(cart));
         bookid.setVisible(false);
         bookid2.setVisible(false);
         addTextfield.setVisible(false);
@@ -118,6 +120,9 @@ public class StoreController extends SQLConnector implements Initializable {
             removeButton.setVisible(true);
             ShoppingList.setVisible(true);
             listTextarea.setVisible(true);
+            if (cart.size()>0) {
+                checkoutButton.setVisible(true);
+            }
 
             if (LoginController.user.getIsEmployee()) {
                 editBooksBtn.setVisible(true);
@@ -167,7 +172,10 @@ public class StoreController extends SQLConnector implements Initializable {
 
             listTextarea.clear();
             listTextarea.appendText(String.valueOf(cart));
-            checkoutButton.setVisible(true);
+
+            if (cart.size()>0) {
+                checkoutButton.setVisible(true);
+            }
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
