@@ -46,8 +46,8 @@ public class BookEditInformationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
-            bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
+        for (Book element : StoreController.arrListBooks) {
+            bookListTextArea.insertText(0, element.toString() + "\n");
         }
     }
 

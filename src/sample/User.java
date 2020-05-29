@@ -46,10 +46,6 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -116,10 +112,6 @@ public class User {
 
     public boolean getIsEmployee() {
         return isEmployee;
-    }
-
-    public void setEmployee(boolean employee) {
-        isEmployee = employee;
     }
 
 }

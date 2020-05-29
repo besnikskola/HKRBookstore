@@ -154,8 +154,12 @@ public class EmployerMenuController implements Initializable {
 
                     if (!bookIdTextField.getText().isEmpty()) {
                         sql.removeBook(removeEntireBook, book, 0);
-                        StoreController.arrListBooks.removeIf(e -> (e.getId() == remId));
-                        System.out.println("Book has been removed from arrListBooks.");
+                        StoreController.arrListBooks.removeIf(e -> {
+                            boolean result = e.getId() == remId;
+                            System.out.println("Book has been removed from arrListBooks.");
+                            return result;
+                        });
+
 
                         alert.setAlertType(Alert.AlertType.INFORMATION);
                         alert.setTitle("Success");
