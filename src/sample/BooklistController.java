@@ -98,9 +98,9 @@ public class BooklistController extends StoreController implements Initializable
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            System.out.println("Id not valid.");
+            System.out.println("Book not found");
             alert.setTitle("Error");
-            alert.setContentText("Book not found. Please try again.");
+            alert.setContentText("Either the book is not found"+"\n"+ "Or the book is sold out"+"\n"+" Please try again.");
             alert.show();
             idField.clear();
         }

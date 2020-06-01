@@ -56,6 +56,7 @@ public class CheckoutController extends SQLConnector implements Initializable {
 
     @FXML
     public void CheckOut(ActionEvent event) throws IOException {
+        Alert alert = new Alert(null);
 
         if (cart.size() > 0) {
 
@@ -75,6 +76,12 @@ public class CheckoutController extends SQLConnector implements Initializable {
             ViewCart.clear();
             ViewCart.appendText(String.valueOf(cart));
             cart.clear();
+            OrderId.clear();
+
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setTitle("Your order has been successfully placed");
+            alert.setContentText("Order confirmed on: "+Email.get(0)+"\n"+"(Shipping time 1-2 business days)");
+            alert.show();
 
 
             Node node = (Node) event.getSource();
@@ -86,7 +93,6 @@ public class CheckoutController extends SQLConnector implements Initializable {
 
 
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
             System.out.println("Nothing in cart");
             alert.setTitle("Cart empty");
             alert.setContentText("No book in cart");

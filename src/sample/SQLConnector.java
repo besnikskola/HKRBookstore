@@ -295,7 +295,10 @@ public class SQLConnector {
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                if (resultSet.getString("bookid").equals(bookid)) {
+                Integer count1 = Collections.frequency(cart, "Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n");
+                NewQuantity=resultSet.getInt("quantity")-count1;
+                System.out.println("Quantity left: "+NewQuantity);
+                if (resultSet.getString("bookid").equals(bookid)&&NewQuantity>0) {
                     resultSet.getString("bookid");
                     resultSet.getString("title");
                     resultSet.getString("author");
@@ -312,7 +315,7 @@ public class SQLConnector {
 
 
                     Integer countA = Collections.frequency(cart, "Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n");
-                    System.out.println(countA);
+                    System.out.println("Quantity: "+countA+ ", added of the same book");
 
                     System.out.println("Quantity: " + resultSet.getInt("quantity"));
                     NewQuantity = resultSet.getInt("quantity") - countA;
