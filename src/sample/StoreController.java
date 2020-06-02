@@ -85,6 +85,12 @@ public class StoreController extends SQLConnector implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        FamousBooks();
+        top5Textarea.appendText(FamousBooks.get(0));
+        top5Textarea.appendText(FamousBooks.get(1));
+        top5Textarea.appendText(FamousBooks.get(2));
+        top5Textarea.appendText(FamousBooks.get(3));
+        top5Textarea.appendText(FamousBooks.get(4));
         listTextarea.clear();
         listTextarea.appendText(String.valueOf(cart));
         bookid.setVisible(false);
@@ -222,12 +228,6 @@ public class StoreController extends SQLConnector implements Initializable {
     }
     @FXML
     private void TopSellers(){
-        FamousBooks();
-
-
-        top5Textarea.clear();
-        top5Textarea.appendText(String.valueOf(FamousBooks));
-
 
         sellingBooksBtn.setVisible(false);
         top5Textarea.setVisible(true);
@@ -242,10 +242,12 @@ public class StoreController extends SQLConnector implements Initializable {
         System.out.println("You have successfully signed out.");
         changeScene(event);
         Email.clear();
+        top5Textarea.clear();
     }
 
     @FXML
     public void changeScene(ActionEvent event) throws IOException {
+        top5Textarea.clear();
 
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();

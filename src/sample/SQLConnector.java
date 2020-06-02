@@ -513,7 +513,7 @@ public class SQLConnector {
                 System.out.println(resultSet.getString("B.title"));
                 FamousBooks.add(resultSet.getString("B.title") + "\n");
             }
-            System.out.println(FamousBooks);
+           // System.out.println(FamousBooks);
 
 
         } catch (SQLException e) {
