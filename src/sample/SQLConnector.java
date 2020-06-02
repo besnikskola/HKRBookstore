@@ -1,6 +1,8 @@
 package sample;
 
 
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -199,17 +201,49 @@ public class SQLConnector {
                 String sql = "DELETE FROM `books` WHERE `books`.`bookid` = " + book.getId();
                 statement = connection.createStatement();
                 statement.executeUpdate(sql);
+                EmployerMenuController.removeSuccess = true;
+                System.out.println("Status of removeSuccess: " + EmployerMenuController.removeSuccess);
 
             } else {
-                String sql = "UPDATE `books` SET `quantity` = `quantity` - " + quantity + " WHERE `bookid` = " + book.getId() + ";";
-
+                String checkSql = "SELECT quantity FROM books WHERE bookid = " + book.getId() + ";";
                 statement = connection.createStatement();
-                statement.executeUpdate(sql);
+                resultSet = statement.executeQuery(checkSql);
 
-                System.out.println("Book quantity has been removed.");
+                int checker = 0;
+                while (resultSet.next()) {
+                    checker = resultSet.getInt("quantity");
+                    checker = checker - quantity;
+                    System.out.println("Value of checker: " + checker);
+                }
+
+                boolean moreThanZero = false;
+
+                if (checker >= 0) {
+                    moreThanZero = true;
+                    System.out.println("Result is more than or equal to zero.");
+                } else {
+                    System.out.println("Result is NOT more than zero!");
+                }
+
+                if (moreThanZero) {
+                    String removeSql = "UPDATE `books` SET `quantity` = `quantity` - " + quantity + " WHERE `bookid` = " + book.getId() + ";";
+                    statement = connection.createStatement();
+                    statement.executeUpdate(removeSql);
+
+                    EmployerMenuController.removeSuccess = true;
+                    System.out.println("Book quantity has been removed.");
+                } else {
+                    System.out.println("Result is not more than zero and thus you have to decrease by a different number.");
+                }
 
             }
             disconnect();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            EmployerMenuController.removeSuccess = false;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Exists in another table");
+            alert.setContentText("This book id exists in another table as a foreign key. It cannot be entirely removed from the database. Choose remove quantity for this book instead.");
+            alert.show();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -296,9 +330,9 @@ public class SQLConnector {
 
             while (resultSet.next()) {
                 Integer count1 = Collections.frequency(cart, "Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n");
-                NewQuantity=resultSet.getInt("quantity")-count1;
-                System.out.println("Quantity left: "+NewQuantity);
-                if (resultSet.getString("bookid").equals(bookid)&&NewQuantity>0) {
+                NewQuantity = resultSet.getInt("quantity") - count1;
+                System.out.println("Quantity left: " + NewQuantity);
+                if (resultSet.getString("bookid").equals(bookid) && NewQuantity > 0) {
                     resultSet.getString("bookid");
                     resultSet.getString("title");
                     resultSet.getString("author");
@@ -315,7 +349,7 @@ public class SQLConnector {
 
 
                     Integer countA = Collections.frequency(cart, "Book id: " + resultSet.getString("bookid") + "  '" + resultSet.getString("title") + "'  AUTHOR:" + resultSet.getString("author") + "  PRICE:" + resultSet.getDouble("price") + " sek" + "\n");
-                    System.out.println("Quantity: "+countA+ ", added of the same book");
+                    System.out.println("Quantity: " + countA + ", added of the same book");
 
                     System.out.println("Quantity: " + resultSet.getInt("quantity"));
                     NewQuantity = resultSet.getInt("quantity") - countA;

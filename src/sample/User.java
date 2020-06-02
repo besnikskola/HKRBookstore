@@ -50,10 +50,6 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getFirstname() {
         return firstname;
     }

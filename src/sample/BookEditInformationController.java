@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 
 public class BookEditInformationController implements Initializable {
 
-    LoginController lc = new LoginController();
     SQLConnector sql = new SQLConnector();
 
     @FXML

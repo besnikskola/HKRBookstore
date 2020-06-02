@@ -25,9 +25,6 @@ public class LoginController implements Initializable {
     @FXML
     private TextField passwordTextField;
 
-    @FXML
-    private Button logInBtn;
-
     SQLConnector sql = new SQLConnector();
     static User user;
 
@@ -36,14 +33,6 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
-
-
-    @FXML
-    public void CustomerAccount(ActionEvent event) throws IOException {
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("Customer1.fxml"));
     }
 
     public void logIn(ActionEvent event) {

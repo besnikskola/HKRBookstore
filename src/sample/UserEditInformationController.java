@@ -17,8 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UserEditInformationController implements Initializable {
-
-    LoginController lc = new LoginController();
+    
     SQLConnector sql = new SQLConnector();
 
     @FXML

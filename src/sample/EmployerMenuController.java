@@ -46,13 +46,9 @@ public class EmployerMenuController implements Initializable {
     @FXML
     private TextArea bookListTextArea;
 
-    @FXML
-    private Button addBookBtn;
-
-    @FXML
-    private Button remBookBtn;
-
     boolean removeEntireBook = true;
+
+    static boolean removeSuccess = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -141,6 +137,8 @@ public class EmployerMenuController implements Initializable {
     @FXML
     public void removeBook(ActionEvent event) {
         Alert alert = new Alert(null);
+
+
         if (hasText(event)) {
 
             if (removeEntireBook) {
@@ -154,24 +152,29 @@ public class EmployerMenuController implements Initializable {
 
                     if (!bookIdTextField.getText().isEmpty()) {
                         sql.removeBook(removeEntireBook, book, 0);
-                        StoreController.arrListBooks.removeIf(e -> {
-                            boolean result = e.getId() == remId;
-                            System.out.println("Book has been removed from arrListBooks.");
-                            return result;
-                        });
+                        if (removeSuccess) {
+                            StoreController.arrListBooks.removeIf(e -> {
+                                boolean result = e.getId() == remId;
+                                if (result) {
+                                    System.out.println("Book has been removed from arrListBooks.");
+                                }
+                                return result;
+                            });
 
 
-                        alert.setAlertType(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Success");
-                        alert.setContentText("The book with bookid " + bookIdTextField.getText() + " has been removed from the database!");
-                        alert.show();
-                        bookIdTextField.clear();
-                        bookListTextArea.clear();
+                            alert.setAlertType(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Success");
+                            alert.setContentText("The book with bookid " + bookIdTextField.getText() + " has been removed from the database!");
+                            alert.show();
+                            bookIdTextField.clear();
+                            bookListTextArea.clear();
 
-                        for (Book element : StoreController.arrListBooks) {
-                            bookListTextArea.insertText(0, element.toString() + "\n");
+                            for (Book element : StoreController.arrListBooks) {
+                                bookListTextArea.insertText(0, element.toString() + "\n");
+                            }
+
+                            removeSuccess = false;
                         }
-
                     } else {
                         alert.setAlertType(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
@@ -179,7 +182,6 @@ public class EmployerMenuController implements Initializable {
                         alert.show();
                     }
                 } catch (NumberFormatException e) {
-                    e.printStackTrace();
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Failure");
                     alert.setContentText("Please enter a number instead of text.");
@@ -198,12 +200,21 @@ public class EmployerMenuController implements Initializable {
 
                     sql.removeBook(removeEntireBook, book, quantity);
 
-                    for (Book element : StoreController.arrListBooks) {
-                        if (element.getId() == remId) {
-                            element.setQuantity(element.getQuantity() - quantity);
-                            System.out.println("Remove quantity has been applied onto arrListBooks.");
+                    if (removeSuccess) {
+                        for (Book element : StoreController.arrListBooks) {
+                            if (element.getId() == remId) {
+                                element.setQuantity(element.getQuantity() - quantity);
+                                System.out.println("Remove quantity has been applied onto arrListBooks.");
+                            }
                         }
+                    } else {
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Failure");
+                        alert.setContentText("Quantity below zero is not acceptable. Please choose another (higher) value.");
+                        alert.show();
                     }
+
+                    removeSuccess = false;
 
                     bookIdTextField.clear();
                     remQuantityTextField.clear();
