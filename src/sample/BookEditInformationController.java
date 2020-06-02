@@ -110,6 +110,13 @@ public class BookEditInformationController implements Initializable {
             alert.setContentText("Your information has successfully been changed..");
             alert.show();
 
+            bookIdTextField.clear();
+            genreTextField.clear();
+            titleTextField.clear();
+            authorTextField.clear();
+            quantityTextField.clear();
+            priceTextField.clear();
+
             for (int i = 0; i < StoreController.arrListBooks.size(); i++) {
                 bookListTextArea.insertText(0, StoreController.arrListBooks.get(i).toString() + "\n");
             }

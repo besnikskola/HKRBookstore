@@ -72,8 +72,15 @@ public class RegisterController implements Initializable {
 
     @FXML
     public void registerUser(ActionEvent event) throws IOException {
-        
-        if (repeatPasswordTextField.getText().equals(passwordTextField.getText())) {
+        String pTf = passwordTextField.getText();
+        String rTf = repeatPasswordTextField.getText();
+
+        boolean hasText = !addressTextField.getText().isEmpty() && !emailTextField.getText().isEmpty() && !firstnameTextField.getText().isEmpty() &&
+                !lastnameTextField.getText().isEmpty() && !cityTextField.getText().isEmpty() && !zipTextField.getText().isEmpty() && !countryTextField.getText().isEmpty() &&
+                !stateTextField.getText().isEmpty() && !passwordTextField.getText().isEmpty() && !repeatPasswordTextField.getText().isEmpty();
+        boolean sameText = rTf.equals(pTf);
+
+        if (hasText && sameText) {
             String email = emailTextField.getText();
             String password = passwordTextField.getText();
             String firstname = firstnameTextField.getText();
@@ -104,6 +111,13 @@ public class RegisterController implements Initializable {
 
             stage.setScene(new Scene(root));
             stage.show();
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            System.out.println("Not logged in.");
+            alert.setTitle("Error");
+            alert.setContentText("Invalid credentials. Please try again.");
+            alert.show();
 
         }
 
