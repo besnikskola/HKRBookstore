@@ -68,10 +68,13 @@ public class UserEditInformationController implements Initializable {
 
     @FXML
     public void changeInfo(ActionEvent event) throws IOException {
+        String pTf = passwordTextField.getText();
+        String rTf = repeatPasswordTextField.getText();
 
-        boolean equal = true;
+        boolean hasText = !pTf.isEmpty() && !rTf.isEmpty();
+        boolean sameText = rTf.equals(pTf);
 
-        if (equal) {
+        if (hasText && sameText) {
             LoginController.user.setFirstname(firstnameTextField.getText());
             LoginController.user.setLastname(lastnameTextField.getText());
             LoginController.user.setCity(cityTextField.getText());

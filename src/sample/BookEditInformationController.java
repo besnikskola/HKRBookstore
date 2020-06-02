@@ -53,16 +53,14 @@ public class BookEditInformationController implements Initializable {
     public void updateFields(KeyEvent event) {
 
         try {
-            Book bookUpdate;
             for (Book element : StoreController.arrListBooks) {
                 if (String.valueOf(element.getId()).equals(bookIdTextField.getText())) {
                     System.out.println("Found the book.");
-                    bookUpdate = element;
-                    genreTextField.setText(bookUpdate.getGenre());
-                    titleTextField.setText(bookUpdate.getTitle());
-                    authorTextField.setText(bookUpdate.getAuthor());
-                    quantityTextField.setText(String.valueOf(bookUpdate.getQuantity()));
-                    priceTextField.setText(String.valueOf(bookUpdate.getPrice()));
+                    genreTextField.setText(element.getGenre());
+                    titleTextField.setText(element.getTitle());
+                    authorTextField.setText(element.getAuthor());
+                    quantityTextField.setText(String.valueOf(element.getQuantity()));
+                    priceTextField.setText(String.valueOf(element.getPrice()));
                 }
             }
 
@@ -96,10 +94,12 @@ public class BookEditInformationController implements Initializable {
                 if (element.getId() == changedBook.getId()) {
 
                     System.out.println("Book found in Array Loop.");
+                    element.setTitle(changedBook.getTitle());
                     element.setAuthor(changedBook.getAuthor());
                     element.setGenre(changedBook.getGenre());
                     element.setPrice(changedBook.getQuantity());
                     element.setQuantity(changedBook.getQuantity());
+                    element.setPrice(changedBook.getPrice());
                     System.out.println("Book info edited in arrListBooks.");
                 }
             }
