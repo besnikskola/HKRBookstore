@@ -139,8 +139,9 @@ public class StoreController extends SQLConnector implements Initializable {
     //for book search
     private void relevantSearchMethod() {
         try {
-
+            connect();
             if (searchBookTextField.getText().length() >= 1) {
+
                 searchResultArea.clear();
 
                 statement = connection.createStatement();
