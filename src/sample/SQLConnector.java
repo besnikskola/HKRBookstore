@@ -44,6 +44,27 @@ public class SQLConnector {
         }
     }
 
+    public boolean validCreatedUser(User user) {
+        boolean isValid = false;
+        try {
+            connect();
+            String sql = "SELECT email FROM users WHERE email = '" + user.getEmail() + "';";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            String email = null;
+            while (resultSet.next()) {
+                email = resultSet.getString("email");
+            }
+            if (email == null) {
+                isValid = true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQL Exception.");
+        }
+        return isValid;
+    }
+
 
     public void createUser(User user) {
 
@@ -60,6 +81,7 @@ public class SQLConnector {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     public boolean verifyLogin(String userIn, String pwIn) {
@@ -513,12 +535,28 @@ public class SQLConnector {
                 System.out.println(resultSet.getString("B.title"));
                 FamousBooks.add(resultSet.getString("B.title") + "\n");
             }
-           // System.out.println(FamousBooks);
+            // System.out.println(FamousBooks);
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String recoveredPassword(String email) {
+        String pw = null;
+        try {
+            connect();
+            String sql = "SELECT password FROM users WHERE email = '" + email + "';";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                pw = resultSet.getString("password");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return pw;
     }
 }
 

@@ -58,6 +58,7 @@ public class RegisterController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
     @FXML
     public void AccountCreated(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
@@ -92,25 +93,34 @@ public class RegisterController implements Initializable {
             String state = stateTextField.getText();
 
             User user = new User(email, password, firstname, lastname, address, city, zip, state, country, false);
-            sql.createUser(user);
-            LoginController.user = user;
-            LoginController.isLoggedIn = true;
-            Email.add(emailTextField.getText());
+            if (sql.validCreatedUser(user)) {
+                sql.createUser(user);
+                LoginController.user = user;
+                LoginController.isLoggedIn = true;
+                Email.add(emailTextField.getText());
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            System.out.println("Logged in.");
-            alert.setTitle("Successfully logged in");
-            alert.setContentText("Welcome to the book store.");
-            alert.show();
-            emailTextField.clear();
-            passwordTextField.clear();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                System.out.println("Logged in.");
+                alert.setTitle("Successfully logged in");
+                alert.setContentText("Welcome to the book store.");
+                alert.show();
+                emailTextField.clear();
+                passwordTextField.clear();
 
-            Node node = (Node) event.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("Store.fxml"));
 
-            stage.setScene(new Scene(root));
-            stage.show();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Email is already registered!");
+                alert.show();
+                emailTextField.clear();
+                passwordTextField.clear();
+                repeatPasswordTextField.clear();
+            }
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -118,7 +128,8 @@ public class RegisterController implements Initializable {
             alert.setTitle("Error");
             alert.setContentText("Invalid credentials. Please try again.");
             alert.show();
-
+            passwordTextField.clear();
+            repeatPasswordTextField.clear();
         }
 
 
