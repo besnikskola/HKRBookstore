@@ -38,51 +38,58 @@ public class LoginController implements Initializable {
 
     }
 
-    public void testPrint(MouseEvent event) {
+    public void forgotPassword(MouseEvent event) {
         Alert alert = new Alert(null);
 
         if (!emailTextField.getText().isEmpty()) {
             if (containsValidMail(emailTextField.getText())) {
-                System.out.println("Email text field is not empty, proceed to send password.");
+                if (!sql.userExists(emailTextField.getText())) {
+
+                    System.out.println("Email text field is not empty, proceed to send password.");
 
 
-                final String username = "hkrbookstore@gmail.com";
-                final String password = "KristianstadBookStore123";
+                    final String username = "hkrbookstore@gmail.com";
+                    final String password = "KristianstadBookStore123";
 
-                Properties props = new Properties();
-                props.put("mail.smtp.auth", "true");
-                props.put("mail.smtp.starttls.enable", "true");
-                props.put("mail.smtp.host", "smtp.gmail.com");
-                props.put("mail.smtp.port", "587");
-                String recoveredPass = sql.recoveredPassword(emailTextField.getText());
-                System.out.println("Password is: " + recoveredPass);
+                    Properties props = new Properties();
+                    props.put("mail.smtp.auth", "true");
+                    props.put("mail.smtp.starttls.enable", "true");
+                    props.put("mail.smtp.host", "smtp.gmail.com");
+                    props.put("mail.smtp.port", "587");
+                    String recoveredPass = sql.recoveredPassword(emailTextField.getText());
+                    System.out.println("Password is: " + recoveredPass);
 
 
-                Session session = Session.getInstance(props,
-                        new javax.mail.Authenticator() {
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return new PasswordAuthentication(username, password);
-                            }
-                        });
+                    Session session = Session.getInstance(props,
+                            new javax.mail.Authenticator() {
+                                protected PasswordAuthentication getPasswordAuthentication() {
+                                    return new PasswordAuthentication(username, password);
+                                }
+                            });
 
-                try {
+                    try {
 
-                    Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(username));
-                    message.setRecipients(Message.RecipientType.TO,
-                            InternetAddress.parse(emailTextField.getText()));
-                    message.setSubject("HKR: Recover Password");
-                    message.setText("Your password is: " + recoveredPass);
+                        Message message = new MimeMessage(session);
+                        message.setFrom(new InternetAddress(username));
+                        message.setRecipients(Message.RecipientType.TO,
+                                InternetAddress.parse(emailTextField.getText()));
+                        message.setSubject("HKR: Recover Password");
+                        message.setText("Your password is: " + recoveredPass);
 
-                    Transport.send(message);
+                        Transport.send(message);
 
-                    System.out.println("Message has successfully been sent.");
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setContentText("Password has been sent to your email!");
+                        System.out.println("Message has successfully been sent.");
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setContentText("Password has been sent to your email!");
+                        alert.show();
+
+                    } catch (MessagingException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setContentText("Email does not exist.");
                     alert.show();
-
-                } catch (MessagingException e) {
-                    throw new RuntimeException(e);
                 }
 
             } else {

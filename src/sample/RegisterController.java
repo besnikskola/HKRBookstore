@@ -93,7 +93,7 @@ public class RegisterController implements Initializable {
             String state = stateTextField.getText();
 
             User user = new User(email, password, firstname, lastname, address, city, zip, state, country, false);
-            if (sql.validCreatedUser(user)) {
+            if (sql.userExists(user.getEmail())) {
                 sql.createUser(user);
                 LoginController.user = user;
                 LoginController.isLoggedIn = true;

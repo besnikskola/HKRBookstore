@@ -44,11 +44,11 @@ public class SQLConnector {
         }
     }
 
-    public boolean validCreatedUser(User user) {
-        boolean isValid = false;
+    public boolean userExists(String inputMail) {
+        boolean userExists = false;
         try {
             connect();
-            String sql = "SELECT email FROM users WHERE email = '" + user.getEmail() + "';";
+            String sql = "SELECT email FROM users WHERE email = '" + inputMail + "';";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             String email = null;
@@ -56,13 +56,13 @@ public class SQLConnector {
                 email = resultSet.getString("email");
             }
             if (email == null) {
-                isValid = true;
+                userExists = true;
             }
 
         } catch (SQLException e) {
             System.out.println("SQL Exception.");
         }
-        return isValid;
+        return userExists;
     }
 
 
